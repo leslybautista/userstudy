@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>WhereToGo — User Study</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
+em,i{font-style:normal;}
+
+:root{
+  /* ── Surfaces ──────────────────────────────────────────────────────── */
+  --bg:          #0c0f14;
+  --s1:          #11151c;
+  --s2:          #161b24;
+  --s3:          #1c2230;
+
+  /* ── Borders ───────────────────────────────────────────────────────── */
+  --border:      rgba(220,228,242,.06);
+  --border2:     rgba(220,228,242,.10);
+  --border3:     rgba(220,228,242,.16);
+
+  /* ── Ink ────────────────────────────────────────────────────────────── */
+  --text:        #ecf0f6;
+  --muted2:      #a8b1c2;
+  --muted:       #6b7589;
+  --muted4:      #3f485a;
+
+  /* ── Accent palette ────────────────────────────────────────────────── */
+  --cyan:        #7dd3c0;       /* was hard cyan → now WTG teal */
+  --cyan2:       #4aaa96;       /* deeper teal for hover/focus  */
+  --amber:       #d4a574;       /* warm highlight (unchanged role) */
+  --violet:      #9d8fc7;       /* violet accent */
+  --rose:        #c07a8a;       /* softened rose  */
+  --green:       #68b89a;       /* muted sage green */
+
+  /* ── Typography ────────────────────────────────────────────────────── */
+  --serif:       'Newsreader','Source Serif Pro','Times New Roman',serif;
+  --mono:        'Geist Mono','SF Mono',monospace;
+
+  /* ── Radii ──────────────────────────────────────────────────────────── */
+  --r:           14px;
+  --r-sm:        10px;
+  --r-xs:        6px;
+
+  /* ── Shadows ────────────────────────────────────────────────────────── */
+  --shadow-lg:   0 24px 60px -28px rgba(0,0,0,.75), 0 1px 0 rgba(255,255,255,.02) inset;
+  --shadow-md:   0 10px 30px -16px rgba(0,0,0,.60),  0 1px 0 rgba(255,255,255,.02) inset;
+}
+
+html,body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--mono);
+  font-size:14px;
+  line-height:1.6;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Subtle ambient glow – mirrors WTG's body::before */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1000px 700px at 50% 35%, rgba(255,255,255,.014), transparent 70%),
+    radial-gradient(800px 600px at 50% 110%, rgba(125,211,192,.038), transparent 75%),
+    radial-gradient(700px 600px at 50% -5%,  rgba(157,143,199,.028), transparent 70%);
+}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border3);border-radius:2px;}
+
+/* ── Top bar ───────────────────────────────────────────────────────────── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:var(--s1);
+  border-bottom:1px solid var(--border2);
+  padding:12px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+  box-shadow:var(--shadow-md);
+}
+.brand{
+  font-family:var(--serif);
+  font-size:22px;
+  font-weight:300;
+  letter-spacing:-.01em;
+  color:var(--cyan);
+}
+.brand span{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);margin-left:10px;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.progress-bar{
+  flex:1;max-width:380px;height:3px;
+  background:var(--border2);border-radius:2px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;background:var(--cyan);border-radius:2px;
+  transition:width .5s ease;
+}
+.pid-badge{
+  background:var(--s2);border:1px solid var(--border2);
+  border-radius:var(--r-xs);padding:4px 12px;
+  font-size:11px;color:var(--muted);
+}
+.pid-badge strong{color:var(--amber);}
+
+/* ── Phase bar ─────────────────────────────────────────────────────────── */
+.phase-bar{
+  background:var(--s1);border-bottom:1px solid var(--border);
+  padding:8px 28px;
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;color:var(--muted);flex-wrap:wrap;
+}
+.ph-step{display:flex;align-items:center;gap:6px;}
+.ph-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--border3);}
+.ph-dot.done{background:var(--cyan2);border-color:var(--cyan2);}
+.ph-dot.active{
+  background:var(--cyan);border-color:var(--cyan);
+  box-shadow:0 0 8px rgba(125,211,192,.45);
+}
+.ph-sep{color:var(--muted4);}
+
+/* ── Layout ────────────────────────────────────────────────────────────── */
+.main{max-width:1280px;margin:0 auto;padding:32px 32px 72px;position:relative;z-index:1;}
+.screen{display:none;}
+.screen.active{display:block;animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── Section chrome ────────────────────────────────────────────────────── */
+.sec-tag{
+  font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:8px;display:flex;align-items:center;gap:8px;
+}
+.sec-tag::after{content:'';flex:1;max-width:120px;height:1px;background:currentColor;opacity:.25;}
+.sec-title{
+  font-family:var(--serif);font-size:30px;font-weight:300;
+  color:var(--text);line-height:1.2;margin-bottom:8px;
+}
+.sec-desc{
+  color:var(--muted2);font-size:13px;line-height:1.75;
+  max-width:580px;margin-bottom:32px;
+}
+
+/* ── Questions ─────────────────────────────────────────────────────────── */
+.question{margin-bottom:28px;}
+.q-label{display:block;font-size:13px;color:var(--text);line-height:1.65;margin-bottom:12px;}
+.q-num{color:var(--cyan);font-size:10px;margin-right:6px;letter-spacing:.08em;}
+.q-note{
+  font-size:11px;color:var(--muted2);
+  margin-bottom:10px;padding:8px 12px;
+  background:rgba(125,211,192,.04);
+  border-left:2px solid var(--border3);
+  border-radius:0 var(--r-xs) var(--r-xs) 0;
+}
+
+/* ── Option chips ──────────────────────────────────────────────────────── */
+.opt-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.opt{
+  display:flex;align-items:center;gap:8px;
+  background:var(--s1);
+  border:1px solid var(--border2);
+  border-radius:var(--r-xs);
+  padding:8px 14px;cursor:pointer;
+  transition:all .18s;
+  font-size:13px;color:var(--muted2);user-select:none;
+}
+.opt:hover{border-color:var(--cyan2);color:var(--text);}
+.opt.sel{
+  border-color:var(--cyan);
+  background:rgba(125,211,192,.07);
+  color:var(--cyan);
+}
+.opt-dot{
+  width:12px;height:12px;border-radius:50%;border:1.5px solid currentColor;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+}
+.opt-dot::after{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:currentColor;display:none;
+}
+.opt.sel .opt-dot::after{display:block;}
+.opt-sq .opt-dot{border-radius:3px;}
+
+/* ── Textarea / inputs ─────────────────────────────────────────────────── */
+.q-textarea{
+  width:100%;background:var(--s1);
+  border:1px solid var(--border2);
+  border-radius:var(--r-xs);
+  color:var(--text);font-family:var(--mono);font-size:13px;
+  line-height:1.7;padding:12px 14px;resize:vertical;min-height:80px;
+  outline:none;transition:border-color .18s;
+}
+.q-textarea:focus{border-color:var(--cyan);}
+.q-textarea::placeholder{color:var(--muted);opacity:.45;}
+.q-input{
+  background:var(--s1);border:1px solid var(--border2);
+  border-radius:var(--r-xs);
+  color:var(--text);font-family:var(--mono);font-size:14px;
+  padding:10px 14px;width:100%;max-width:300px;
+  outline:none;transition:border-color .18s;
+}
+.q-input:focus{border-color:var(--cyan);}
+.q-input.lg{max-width:100%;font-size:20px;text-align:center;letter-spacing:.1em;padding:14px;}
+
+/* ── Likert table ──────────────────────────────────────────────────────── */
+.likert-wrap{overflow-x:auto;padding-bottom:4px;}
+.likert-tbl{width:100%;min-width:480px;border-collapse:collapse;}
+.likert-tbl th{
+  font-size:10px;letter-spacing:.08em;color:var(--muted);
+  text-transform:uppercase;padding:0 6px 10px;text-align:center;font-weight:400;
+}
+.likert-tbl th:first-child{text-align:left;padding-left:0;}
+.l-row td{padding:10px 6px;border-top:1px solid var(--border);vertical-align:middle;}
+.l-row td:first-child{font-size:13px;color:var(--text);padding-left:0;line-height:1.5;max-width:320px;}
+.l-row td:not(:first-child){text-align:center;}
+.l-radio{
+  width:20px;height:20px;border-radius:50%;
+  border:1.5px solid var(--border3);
+  background:transparent;cursor:pointer;
+  display:inline-block;transition:all .18s;
+}
+.l-radio:hover{border-color:var(--cyan2);}
+.l-radio.sel{
+  border-color:var(--cyan);background:var(--cyan);
+  box-shadow:0 0 8px rgba(125,211,192,.35);
+}
+
+/* ── TLX grid ──────────────────────────────────────────────────────────── */
+.tlx-grid{
+  display:grid;
+  gap:1px;
+  background:var(--border);
+  border-radius:var(--r-sm);
+  overflow:hidden;
+}
+
+.tlx-row{
+  background:var(--s1);
+  padding:14px 16px;
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:12px;
+  align-items:center;
+}
+
+.tlx-lbl{
+  font-size:12px;
+  color:var(--text);
+  font-weight:500;
+}
+
+.tlx-def{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.4;
+}
+
+.tlx-slider-wrap{
+  display:grid;
+  grid-template-columns:1fr 70px;
+  gap:12px;
+  align-items:center;
+}
+
+.tlx-slider{
+  width:100%;
+  accent-color:var(--cyan);
+}
+
+.tlx-val{
+  background:var(--s2);
+  border:1px solid var(--border2);
+  border-radius:var(--r-xs);
+  color:var(--cyan);
+  font-family:var(--mono);
+  font-size:16px;
+  font-weight:400;
+  text-align:center;
+  padding:7px;
+}
+
+.tlx-slider::-webkit-slider-runnable-track{
+  height:6px;
+  border-radius:999px;
+}
+
+.tlx-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--cyan);
+  margin-top:-6px;
+}
+
+.tlx-slider::-moz-range-track{
+  height:6px;
+  border-radius:999px;
+}
+
+.tlx-slider::-moz-range-thumb{
+  width:18px;
+  height:18px;
+  border:none;
+  border-radius:50%;
+  background:var(--cyan);
+}
+
+.tlx-slider::-webkit-slider-tick-mark{
+  display:block;
+}
+
+/* ── Rank list ─────────────────────────────────────────────────────────── */
+.rank-grid{display:grid;gap:6px;}
+.rank-item{
+  display:flex;align-items:center;gap:10px;
+  background:var(--s1);border:1px solid var(--border2);
+  border-radius:var(--r-xs);padding:10px 14px;
+}
+.rank-num{font-size:10px;color:var(--cyan);letter-spacing:.08em;width:20px;text-align:center;}
+.rank-label{font-size:13px;color:var(--text);flex:1;}
+.rank-sel{display:flex;gap:6px;}
+.rank-btn{
+  width:28px;height:28px;border-radius:4px;
+  background:var(--s2);border:1px solid var(--border2);
+  color:var(--muted);font-family:var(--mono);font-size:11px;
+  cursor:pointer;transition:all .18s;
+  display:flex;align-items:center;justify-content:center;
+}
+.rank-btn:hover{border-color:var(--cyan2);color:var(--text);}
+.rank-btn.sel{
+  background:var(--cyan);border-color:var(--cyan);
+  color:var(--bg);font-weight:500;
+}
+
+/* ── Info / warning boxes ──────────────────────────────────────────────── */
+.info-box{
+  background:rgba(125,211,192,.05);
+  border:1px solid rgba(125,211,192,.2);
+  border-left:3px solid var(--cyan);
+  border-radius:var(--r-xs);
+  padding:14px 16px;font-size:12px;color:var(--muted2);line-height:1.7;margin-bottom:20px;
+}
+.info-box strong{color:var(--cyan);}
+.warn-box{
+  background:rgba(212,165,116,.06);
+  border:1px solid rgba(212,165,116,.28);
+  border-left:3px solid var(--amber);
+  border-radius:var(--r-xs);
+  padding:14px 16px;font-size:12px;color:var(--muted2);line-height:1.7;margin-bottom:20px;
+}
+.warn-box strong{color:var(--amber);}
+
+/* ── Persona cards ─────────────────────────────────────────────────────── */
+.persona-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;}
+.persona-card{
+  background:var(--s2);border:1px solid var(--border2);
+  border-radius:var(--r-sm);padding:14px;border-top:2px solid;
+  box-shadow:var(--shadow-md);
+}
+.pc-name{font-family:var(--serif);font-size:18px;font-weight:300;margin-bottom:6px;}
+.pc-body{font-size:11px;color:var(--muted2);line-height:1.6;margin-bottom:8px;}
+.pc-hint{
+  font-size:10px;color:var(--muted);background:var(--s3);
+  border-radius:4px;padding:7px 9px;line-height:1.5;
+}
+
+/* ── Interface link block ──────────────────────────────────────────────── */
+.iface-link{
+  display:flex;flex-direction:column;align-items:center;
+  gap:12px;background:var(--s2);border:1px solid var(--border2);
+  border-radius:var(--r);padding:28px;margin-bottom:24px;
+  box-shadow:var(--shadow-lg);
+}
+.iface-link-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--cyan);color:var(--bg);border:none;
+  border-radius:var(--r-sm);padding:12px 28px;
+  font-family:var(--mono);font-size:13px;font-weight:500;
+  cursor:pointer;letter-spacing:.04em;text-decoration:none;transition:all .2s;
+}
+.iface-link-btn:hover{opacity:.88;box-shadow:0 0 24px rgba(125,211,192,.28);}
+.iface-link-desc{font-size:12px;color:var(--muted2);text-align:center;line-height:1.6;}
+
+/* ── Button row ────────────────────────────────────────────────────────── */
+.btn-row{
+  display:flex;justify-content:flex-end;align-items:center;
+  padding-top:24px;border-top:1px solid var(--border);
+  gap:12px;flex-wrap:wrap;
+}
+.btn-primary{
+  background:var(--cyan);color:var(--bg);border:none;
+  border-radius:var(--r-xs);padding:12px 32px;
+  font-family:var(--mono);font-size:13px;font-weight:500;
+  cursor:pointer;letter-spacing:.04em;transition:all .2s;
+}
+.btn-primary:hover{opacity:.9;box-shadow:0 0 20px rgba(125,211,192,.25);}
+.btn-primary:disabled{opacity:.3;cursor:default;}
+.btn-sec{
+  background:transparent;border:1px solid var(--muted4);
+  color:var(--muted2);border-radius:var(--r-xs);padding:11px 20px;
+  font-family:var(--mono);font-size:12px;cursor:pointer;transition:all .2s;
+}
+.btn-sec:hover{border-color:var(--muted2);color:var(--text);}
+.hint-text{font-size:11px;color:var(--muted);flex:1;}
+.sec-divider{border:none;border-top:1px solid var(--border);margin:32px 0;}
+
+/* ── Center / break screens ────────────────────────────────────────────── */
+.center-screen{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:calc(100vh - 146px);
+  text-align:center;gap:18px;padding:24px 0;
+}
+.big-title{
+  font-family:var(--serif);font-size:clamp(44px,5vw,72px);font-weight:300;
+  color:var(--cyan);margin-bottom:4px;line-height:1;
+}
+.big-sub{
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:18px;
+}
+.break-screen{text-align:center;padding:80px 24px;}
+.break-icon{font-size:48px;margin-bottom:20px;opacity:.4;}
+
+/* ── Save status ───────────────────────────────────────────────────────── */
+.save-status{font-size:11px;display:flex;align-items:center;gap:6px;}
+.save-dot{width:6px;height:6px;border-radius:50%;}
+
+/* ── Welcome card ──────────────────────────────────────────────────────── */
+.welcome-shell{
+  width:100%;max-width:1160px;
+  margin:0 auto;
+  display:flex;justify-content:center;
+}
+.welcome-card,.welcome-side{
+  background:linear-gradient(160deg,rgba(22,27,36,.97),rgba(12,15,20,.99));
+  border:1px solid var(--border2);
+  border-radius:var(--r);
+  box-shadow:var(--shadow-lg);
+}
+.welcome-card{padding:28px 32px 24px;text-align:left;}
+.welcome-topline{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;margin-bottom:18px;
+}
+.welcome-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);}
+.welcome-meta{font-size:11px;color:var(--muted);}
+.welcome-lead{
+  display:grid;grid-template-columns:minmax(0,1fr) 160px;
+  gap:1px;align-items:start;margin-bottom:18px;
+}
+.welcome-copy p{font-size:14px;color:var(--muted2);line-height:1.75;max-width:62ch;}
+.welcome-copy strong{color:var(--text);}
+.welcome-stats{display:grid;grid-template-columns:1fr;gap:10px;}
+.welcome-stat{
+  background:rgba(28,34,48,.85);border:1px solid var(--border2);
+  border-radius:var(--r-sm);padding:14px 12px;
+}
+.welcome-stat strong{
+  display:block;font-size:20px;font-family:var(--serif);font-weight:300;
+  line-height:1;color:var(--text);margin-bottom:6px;
+}
+.welcome-stat span{font-size:11px;color:var(--muted2);line-height:1.5;}
+.welcome-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px 16px;margin-bottom:18px;
+}
+.field-block label{
+  font-size:11px;color:var(--muted);letter-spacing:.08em;
+  text-transform:uppercase;display:block;margin-bottom:7px;
+}
+.field-block .q-input{max-width:100%;}
+.other-followup{display:none;margin-top:10px;}
+.other-followup.show{display:block;}
+.order-block{grid-column:1 / -1;}
+.welcome-actions{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;gap:14px;
+  padding-top:16px;border-top:1px solid var(--border);
+}
+.welcome-actions .btn-primary{justify-self:end;min-width:180px;}
+.welcome-helper{font-size:12px;color:var(--muted2);line-height:1.6;}
+.welcome-side{
+  padding:24px;display:flex;flex-direction:column;
+  justify-content:space-between;gap:18px;text-align:left;
+}
+.welcome-panel{
+  background:rgba(22,27,36,.6);border:1px solid var(--border2);
+  border-radius:var(--r-sm);padding:16px 16px 14px;
+}
+.welcome-panel h3{
+  font-family:var(--serif);font-size:20px;font-weight:300;
+  line-height:1.2;margin-bottom:10px;color:var(--text);
+}
+.welcome-panel p,.welcome-panel li{font-size:12px;color:var(--muted2);line-height:1.65;}
+.welcome-list{list-style:none;display:grid;gap:10px;}
+.welcome-list li{display:flex;gap:10px;align-items:flex-start;}
+.welcome-list b{color:var(--cyan);font-weight:500;min-width:18px;}
+.welcome-side .warn-box{margin-bottom:0;background:rgba(212,165,116,.05);}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .welcome-shell{grid-template-columns:1fr;min-height:auto;gap:18px;}
+  .welcome-side{order:-1;}
+}
+@media(max-width:600px){
+  .tlx-row{grid-template-columns:1fr;gap:8px;}
+  .persona-cards{grid-template-columns:1fr;}
+  .main{padding:20px 16px 56px;}
+  .center-screen{min-height:auto;padding:8px 0 20px;}
+  .welcome-card{padding:20px;}
+  .welcome-grid{grid-template-columns:1fr;}
+  .welcome-actions{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">WhereToGo <span>User Study</span></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="save-status" id="saveStatus">
+      <span class="save-dot" style="background:var(--muted)"></span>
+      <span style="color:var(--muted)">not started</span>
+    </div>
+    <div class="pid-badge" id="pidBadge" style="display:none">
+      <strong id="pidDisplay">—</strong> · <span id="orderDisplay">—</span>
+    </div>
+  </div>
+</div>
+
+<div class="phase-bar" id="phaseBar" style="display:none">
+  <div class="ph-step"><div class="ph-dot" id="pd0"></div><span style="font-size:11px">About you</span></div>
+  <div class="ph-sep">›</div>
+  <div class="ph-step"><div class="ph-dot" id="pd1"></div><span style="font-size:11px">Interface 1</span></div>
+  <div class="ph-sep">›</div>
+  <div class="ph-step"><div class="ph-dot" id="pd2"></div><span style="font-size:11px">Break</span></div>
+  <div class="ph-sep">›</div>
+  <div class="ph-step"><div class="ph-dot" id="pd3"></div><span style="font-size:11px">Interface 2</span></div>
+  <div class="ph-sep">›</div>
+  <div class="ph-step"><div class="ph-dot" id="pd4"></div><span style="font-size:11px">Evaluation</span></div>
+</div>
+
+<div class="main">
+
+<!-- ═══ WELCOME ═══ -->
+<div class="screen active" id="scr-welcome">
+  <div class="center-screen">
+    <div class="big-title">WhereToGo</div>
+
+    <div class="welcome-shell">
+      <section class="welcome-card">
+        <div class="welcome-topline">
+          <div class="welcome-kicker">Start session</div>
+          <div class="welcome-meta">Academic prototype · guided test</div>
+        </div>
+
+        <div class="welcome-lead">
+          <div class="welcome-copy">
+            <p>Hello, my name is <strong>Lesly</strong> and I am conducting this survey as part of my master’s thesis in cartography.</p>
+            <p>Your participation is <strong>voluntary</strong>, and you may withdraw at any time. Please note that only fully completed surveys will be included in the analysis of this research.</p>
+            <p>The survey takes approximately <strong>45 minutes</strong> to complete.</p>
+            <p>The responses are <strong>anonymous</strong>, and the results of the study will be published anonymously.</p>
+            <p>By clicking <strong>Start</strong>, you confirm that you have read and agree to these terms.</p>
+          </div>
+
+          <div class="welcome-stats">
+            <div class="welcome-stat"><strong>45 min</strong><span>Estimated duration</span></div>
+            <div class="welcome-stat"><strong>2 views</strong><span>Map first or list first</span></div>
+          
+          </div>
+        </div>
+
+        <div class="welcome-grid">
+          <div class="field-block">
+            <label>Session number</label>
+            <input class="q-input" id="inp-session" placeholder="e.g. S1"/>
+          </div>
+
+          <div class="field-block">
+            <label>Participant ID</label>
+            <input class="q-input lg" id="inp-pid" placeholder="P01" style="max-width:100%;text-align:center;"/>
+          </div>
+
+          <div class="field-block order-block">
+            <label>Assigned order <em style="font-style:italic;color:var(--muted)">(from the facilitator)</em></label>
+            <div class="opt-grid">
+              <div class="opt" onclick="selectOrder('AB',this)"><span class="opt-dot"></span>AB — Map view first</div>
+              <div class="opt" onclick="selectOrder('BA',this)"><span class="opt-dot"></span>BA — List view first</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="welcome-actions">
+          <div class="welcome-helper">Complete the participant ID and choose the assigned order to unlock the study.</div>
+          <button class="btn-primary" id="btnStart" onclick="startStudy()" disabled>Start →</button>
+        </div>
+      </section>
+
+     
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 1 — ABOUT YOU ═══ -->
+<div class="screen" id="scr-p1a">
+  <div class="sec-tag" style="color:var(--cyan)">About you</div>
+  <h1 class="sec-title">A few things about you</h1>
+  <p class="sec-desc">This helps us understand who participated in the study. Everything is fully anonymous.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q1.</span>How old are you?</label>
+    <div class="opt-grid" id="b1"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q2.</span>How do you identify?</label>
+    <div class="opt-grid" id="b2"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q3.</span>What do you study or do for work?</label>
+    <input class="q-input" id="b3" placeholder="e.g. Architecture, Nursing, Software engineering…" style="max-width:100%;"/>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q4.</span>What is your highest completed level of education?</label>
+    <div class="opt-grid" id="b4"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q5.</span>Where do you currently live?</label>
+    <input class="q-input" id="b5" placeholder="e.g. Vienna, Germany…" style="max-width:100%;"/>
+  </div>
+
+  <div class="btn-row">
+    <span class="hint-text" id="hint-p1a">Answer Q1, Q2, and Q4 to continue</span>
+    <button class="btn-primary" id="btn-p1a" onclick="goTo('scr-p1b',1)" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 2 — HOW YOU TRAVEL ═══ -->
+<div class="screen" id="scr-p1b">
+  <div class="sec-tag" style="color:var(--cyan)">How you travel</div>
+  <h1 class="sec-title">Your travel habits</h1>
+  <p class="sec-desc">Tell us a bit about how you normally decide where to go.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q6.</span>How many leisure trips have you taken in the past 2 years?</label>
+    <div class="opt-grid" id="b6"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q7.</span>When choosing a destination, what do you normally rely on? <em style="color:var(--muted)">(select all that apply)</em></label>
+    <div class="opt-grid" id="b7"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q8.</span>How familiar are you with distorted map concepts such as <strong style="color:var(--text)">isochrons</strong>, <strong style="color:var(--text)">cartograms</strong>, <strong style="color:var(--text)">map imitation</strong>,or <strong style="color:var(--text)">subjective maps</strong>?</label>
+    <div class="opt-grid" id="b8"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q9.</span>Have you used travel search or destination recommendation platforms such as Skyscanner, Google Flights, or similar tools, and how comfortable do you feel using them? </label>
+    <div class="opt-grid" id="b9"></div>
+  </div>
+
+  <div class="btn-row">
+    <span class="hint-text" id="hint-p1b">Answer Q6, Q8, and Q9 to continue</span>
+    <button class="btn-primary" id="btn-p1b" onclick="goTo('scr-p1c',2)" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 3 — YOUR PRIORITIES ═══ -->
+<div class="screen" id="scr-p1c">
+  <div class="sec-tag" style="color:var(--cyan)">Your priorities</div>
+  <h1 class="sec-title">What matters most when you travel?</h1>
+  <p class="sec-desc">Before you see any interface, tell us how you currently weigh things up when choosing a destination.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q10.</span>Rank these four factors from <strong style="color:var(--amber)">1 (most important)</strong> to <strong style="color:var(--amber)">4 (least important)</strong>. Each number can only be used once.</label>
+    <div class="q-note">Think about how you actually decide — not how you think you should.</div>
+    <div class="rank-grid" id="rankGrid">
+      <div class="rank-item" id="rk-time">
+        <span class="rank-num" id="rn-time">—</span>
+        <span class="rank-label">Travel time to get there</span>
+        <div class="rank-sel">
+          <div class="rank-btn" onclick="setRank('time',1)">1</div>
+          <div class="rank-btn" onclick="setRank('time',2)">2</div>
+          <div class="rank-btn" onclick="setRank('time',3)">3</div>
+          <div class="rank-btn" onclick="setRank('time',4)">4</div>
+        </div>
+      </div>
+      <div class="rank-item" id="rk-cost">
+        <span class="rank-num" id="rn-cost">—</span>
+        <span class="rank-label">Financial cost (transport + accommodation)</span>
+        <div class="rank-sel">
+          <div class="rank-btn" onclick="setRank('cost',1)">1</div>
+          <div class="rank-btn" onclick="setRank('cost',2)">2</div>
+          <div class="rank-btn" onclick="setRank('cost',3)">3</div>
+          <div class="rank-btn" onclick="setRank('cost',4)">4</div>
+        </div>
+      </div>
+      <div class="rank-item" id="rk-co2">
+        <span class="rank-num" id="rn-co2">—</span>
+        <span class="rank-label">Environmental impact</span>
+        <div class="rank-sel">
+          <div class="rank-btn" onclick="setRank('co2',1)">1</div>
+          <div class="rank-btn" onclick="setRank('co2',2)">2</div>
+          <div class="rank-btn" onclick="setRank('co2',3)">3</div>
+          <div class="rank-btn" onclick="setRank('co2',4)">4</div>
+        </div>
+      </div>
+      <div class="rank-item" id="rk-pop">
+        <span class="rank-num" id="rn-pop">—</span>
+        <span class="rank-label">How popular or well-known the destination is</span>
+        <div class="rank-sel">
+          <div class="rank-btn" onclick="setRank('pop',1)">1</div>
+          <div class="rank-btn" onclick="setRank('pop',2)">2</div>
+          <div class="rank-btn" onclick="setRank('pop',3)">3</div>
+          <div class="rank-btn" onclick="setRank('pop',4)">4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q11.</span>In a few words — why did you rank them that way?</label>
+    <textarea class="q-textarea" id="b11" rows="3" placeholder="Your reasoning in your own words…"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <span class="hint-text" id="hint-p1c">Assign all four ranks (each unique) to continue</span>
+    <button class="btn-primary" id="btn-p1c" onclick="goTo('scr-p1d',3)" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 4 — UNAIDED ELICITATION ═══ -->
+<div class="screen" id="scr-p1d">
+  <div class="sec-tag" style="color:var(--cyan)">Before we start</div>
+  <h1 class="sec-title">Without any tools — where would you go?</h1>
+  <p class="sec-desc">Answer this from memory only. Please don't open any travel app or website during this section.</p>
+
+  <div class="warn-box">
+    <strong>Scenario:</strong> You have free time in August and December and you are travelling from <strong>Vienna</strong>. Please name up to three destinations you would like to visit in each month, and rank them in order. Write whatever comes to mind first — there are no right or wrong answers.
+  </div>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q12.</span>Name up to 5 destinations you'd consider.</label>
+    <div style="display:grid;gap:12px;">
+      <div>
+        <div style="font-size:10px;color:var(--cyan);letter-spacing:.08em;margin-bottom:5px;">August </div>
+        <input class="q-input" id="b12a" placeholder="City 1, city 2, …" style="max-width:100%;margin-bottom:6px;"/>
+        <textarea class="q-textarea" id="b12a_why" rows="2" placeholder="What draws you there?"></textarea>
+      </div>
+      <div>
+        <div style="font-size:10px;color:var(--cyan);letter-spacing:.08em;margin-bottom:5px;">December </div>
+        <input class="q-input" id="b12b" placeholder="City 1, city 2, …" style="max-width:100%;margin-bottom:6px;"/>
+        <textarea class="q-textarea" id="b12b_why" rows="2" placeholder="What draws you there?"></textarea>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <span class="hint-text">Name at least one destination to continue</span>
+    <button class="btn-primary" onclick="goTo('scr-c1-orient',4)">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 5 — INTERFACE 1 ═══ -->
+<div class="screen" id="scr-c1-orient">
+  <div class="sec-tag" id="c1-tag" style="color:var(--amber)">Interface 1</div>
+  <h1 class="sec-title" id="c1-title">Take a look around</h1>
+  <p class="sec-desc">Open the interface below and explore it freely for about 2 minutes. Click, scroll, adjust anything — there's nothing you can break.</p>
+
+  <div class="iface-link">
+    <div class="iface-link-desc">
+      Click the button to open the interface in a new tab.<br/>
+      When you're done exploring, <strong>return to this screen</strong>
+    </div>
+    <a id="c1-link" href="#" target="_blank" class="iface-link-btn">Open Interface 1 ↗</a>
+    <div class="iface-link-desc" style="font-size:11px;opacity:.6;">Opens in a new tab and start exploring — return here when finished.</div>
+  </div>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q14.</span>After your free exploration: what do you think this interface is for? Describe it in your own words — no technical language needed.</label>
+    <textarea class="q-textarea" id="e0" rows="3" placeholder="First impressions, in plain language…"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-c1-persona',5)">Continue to exercises →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 6 — INTERFACE 1: PERSONAS ═══ -->
+<div class="screen" id="scr-c1-persona">
+  <div class="sec-tag" id="c1p-tag" style="color:var(--amber)">Interface 1 · Exercises</div>
+  <h1 class="sec-title">Three travelers, three scenarios</h1>
+  <p class="sec-desc">Read each profile. Open the interface and set the preference sliders to match that traveler's priorities. Record what the interface suggests, then answer the questions below.</p>
+
+  <div class="persona-cards" id="c1-personas"></div>
+  <hr class="sec-divider"/>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q15.</span>Traveler 1 — What are the top 3 destinations shown?Did you select a predetermined mode, or did you assign your own weights? If you assigned your own weights, please specify which weights you selected.  </label>
+    <textarea class="q-textarea" id="e1a" rows="4" placeholder="Top 3 destinations, weights"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q16.</span>Traveler 2 — Did the destinations (dots) change noticeably when you moved the sliders to match their priorities? Did the change feel proportional and logical? <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
+    <div class="opt-grid" style="margin-bottom:10px;" id="e1b_rate"></div>
+    <textarea class="q-textarea" id="e1b" rows="3" placeholder="What changed, and did it make sense?"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q17.</span>Traveler 3 — Was anything surprising about the results for this person? Describe anything unexpected.</label>
+    <textarea class="q-textarea" id="e1c" rows="3" placeholder="Your observations…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q18.</span>Looking at all three together — did the interface respond consistently and meaningfully across different travelers? Were there any changes that felt wrong or confusing?</label>
+    <textarea class="q-textarea" id="e1d" rows="3" placeholder="Overall reflection…"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-c1-self',6)">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 7 — INTERFACE 1: YOUR TRIP ═══ -->
+<div class="screen" id="scr-c1-self">
+  <div class="sec-tag" id="c1s-tag" style="color:var(--amber)">Interface 1 · Your trip</div>
+  <h1 class="sec-title">Now plan your own trip</h1>
+  <p class="sec-desc">Set the sliders to match your own preferences for a summer trip from Vienna. Take your time and explolre.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q19.</span>Set the weights to match your real preferences. Which 3 destination does the interface suggest as your best matches? Does it feel right?</label>
+    <textarea class="q-textarea" id="e4" rows="3" placeholder="Name 3 destinations and whether it feels like a match…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q20.</span>Now shift one slider significantly — for example, make cost much more important. Which destination moved to the top? Did that change feel logical?</label>
+    <textarea class="q-textarea" id="e5" rows="3" placeholder="What changed and whether it made sense…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q21.</span>Is there a destination the interface showed you that you didn't consider before</label>
+    <textarea class="q-textarea" id="e6" rows="2" placeholder="Destination name, or 'None' if all were expected…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q22.</span>Which destination would you actually choose for your trip? How confident are you in that choice after using this interface? <em style="color:var(--muted)">(1 = not at all · 5 = very confident)</em></label>
+    <input class="q-input" id="e7_dest" placeholder="Destination name…" style="max-width:100%;margin-bottom:10px;"/>
+    <div class="opt-grid" id="e7_conf"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q23.</span>Take 30 seconds to reflect. What's the first thing that comes to mind about this interface?</label>
+    <textarea class="q-textarea" id="e8" rows="2" placeholder="Your impression…"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-c1-tlx',7)">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 8 — INTERFACE 1: NASA-TLX ═══ -->
+<div class="screen" id="scr-c1-tlx">
+  <div class="sec-tag" id="c1tlx-tag" style="color:var(--amber)">Interface 1 · Mental load</div>
+  <h1 class="sec-title">How demanding was that?</h1>
+  <p class="sec-desc">Rate how the experience felt across six dimensions. Think back over everything you did with this interface. Rate from <strong style="color:var(--amber)">1 (very low)</strong> to <strong style="color:var(--amber)">20 (very high)</strong>.</p>
+  <div class="tlx-grid" id="c1-tlx-grid"></div>
+  <div class="btn-row">
+    <span class="hint-text" id="hint-c1tlx">Rate all 6 dimensions to continue</span>
+    <button class="btn-primary" id="btn-c1tlx" onclick="goTo('scr-c1-sus',8)" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 9 — INTERFACE 1: SUS ═══ -->
+<div class="screen" id="scr-c1-sus">
+  <div class="sec-tag" id="c1sus-tag" style="color:var(--amber)">Interface 1 · Usability</div>
+  <h1 class="sec-title">How easy was it to use?</h1>
+  <p class="sec-desc">Rate each statement about the interface you just used. <strong style="color:var(--text)">1 = Strongly disagree · 5 = Strongly agree.</strong></p>
+  <div class="likert-wrap">
+    <table class="likert-tbl">
+      <thead><tr>
+        <th>Statement</th>
+        <th>1<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Disagree</span></th>
+        <th>2</th><th>3</th><th>4</th>
+        <th>5<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Agree</span></th>
+      </tr></thead>
+      <tbody id="c1-sus-body"></tbody>
+    </table>
+  </div>
+  <div class="btn-row">
+    <span class="hint-text" id="hint-c1sus">Rate all 10 items to continue</span>
+    <button class="btn-primary" id="btn-c1sus" onclick="goTo('scr-break',9)" disabled>Take a break →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 10 — BREAK ═══ -->
+<div class="screen" id="scr-break">
+  <div class="break-screen">
+    <div class="break-icon">⏸</div>
+    <h2 style="font-family:var(--serif);font-size:32px;color:var(--amber);margin-bottom:12px;">Take a 5-minute break</h2>
+    <p style="color:var(--muted2);max-width:420px;margin:0 auto 28px;line-height:1.8;">
+      Step away from the screen for a few minutes.<br/>
+      Please don't discuss the interface you just used with other participants.<br/><br/>
+      <span style="font-size:11px;opacity:.6;">The facilitator will let you know when to continue.</span>
+    </p>
+    <button class="btn-primary" onclick="goTo('scr-c2-orient',10)" style="background:var(--amber);color:var(--bg);">I'm ready for the second interface →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 11 — INTERFACE 2 ═══ -->
+<div class="screen" id="scr-c2-orient">
+  <div class="sec-tag" id="c2-tag" style="color:var(--violet)">Interface 2</div>
+  <h1 class="sec-title" id="c2-title">A different interface</h1>
+  <p class="sec-desc">Same idea — explore it freely for about 2 minutes before starting the exercises.</p>
+
+  <div class="iface-link">
+    <div class="iface-link-desc">
+      Click the button to open the second interface in a new tab.<br/>
+      When you're done, <strong>close that tab</strong> and return here.
+    </div>
+    <a id="c2-link" href="#" target="_blank" class="iface-link-btn" style="background:var(--violet);color:var(--bg);">Open Interface 2 ↗</a>
+  </div>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q24.</span>After your free exploration: what does this interface do, and how is it different from the first one?</label>
+    <textarea class="q-textarea" id="f0" rows="3" placeholder="First impressions and comparison with the first interface…"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-c2-persona',11)">Continue to exercises →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 12 — INTERFACE 2: PERSONAS ═══ -->
+<div class="screen" id="scr-c2-persona">
+  <div class="sec-tag" id="c2p-tag" style="color:var(--violet)">Interface 2 · Exercises</div>
+  <h1 class="sec-title">Three different travelers</h1>
+  <p class="sec-desc">Same exercise as before, with new traveler profiles.</p>
+
+  <div class="persona-cards" id="c2-personas"></div>
+  <hr class="sec-divider"/>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q25.</span>Traveler 1 — What are the top 3 destinations shown? Which would you recommend, and why?</label>
+    <textarea class="q-textarea" id="f1a" rows="4" placeholder="Top 3 and your recommendation…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q26.</span>Traveler 2 — Did this interface respond noticeably when you changed priorities? Rate 1–5, then explain what changed.</label>
+    <div class="opt-grid" style="margin-bottom:10px;" id="f1b_rate"></div>
+    <textarea class="q-textarea" id="f1b" rows="3" placeholder="What changed and whether it felt logical…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q27.</span>Traveler 3 — Anything surprising or unexpected?</label>
+    <textarea class="q-textarea" id="f1c" rows="3" placeholder="Your observations…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q28.</span>Across all three travelers: did this interface respond in ways that felt consistent and meaningful?</label>
+    <textarea class="q-textarea" id="f1d" rows="3" placeholder="Overall reflection…"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-c2-self',12)">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 13 — INTERFACE 2: YOUR TRIP ═══ -->
+<div class="screen" id="scr-c2-self">
+  <div class="sec-tag" id="c2s-tag" style="color:var(--violet)">Interface 2 · Your trip</div>
+  <h1 class="sec-title">Plan your December trip</h1>
+  <p class="sec-desc">Set our own preferences, december trip from Vienna.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q29.</span>Set preferences to match yours. Which destination does this interface suggest? Does it feel right?</label>
+    <textarea class="q-textarea" id="f4" rows="3" placeholder="Destination and whether it feels like a good match…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q30.</span>Shift one preference significantly. Did this interface respond in a way that felt logical?</label>
+    <textarea class="q-textarea" id="f5" rows="3" placeholder="What changed and whether it made sense…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q31.</span>Any destination shown here that you wouldn't have thought of on your own?</label>
+    <textarea class="q-textarea" id="f6" rows="2" placeholder="Destination name, or 'None'…"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q32.</span>Which destination would you choose from this interface? How confident are you? <em style="color:var(--muted)">(1 = not at all · 5 = very confident)</em></label>
+    <input class="q-input" id="f7_dest" placeholder="Destination name…" style="max-width:100%;margin-bottom:10px;"/>
+    <div class="opt-grid" id="f7_conf"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q33.</span>First thing that comes to mind about this interface?</label>
+    <textarea class="q-textarea" id="f8" rows="2" placeholder="Most immediate impression…"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-c2-tlx',13)">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 14 — INTERFACE 2: NASA-TLX ═══ -->
+<div class="screen" id="scr-c2-tlx">
+  <div class="sec-tag" id="c2tlx-tag" style="color:var(--violet)">Interface 2 · Mental load</div>
+  <h1 class="sec-title">How demanding was that?</h1>
+  <p class="sec-desc">Rate your experience with the <strong style="color:var(--violet)">second interface</strong>. From <strong style="color:var(--amber)">1 (very low)</strong> to <strong style="color:var(--amber)">20 (very high)</strong>.</p>
+  <div class="tlx-grid" id="c2-tlx-grid"></div>
+  <div class="btn-row">
+    <span class="hint-text" id="hint-c2tlx">Rate all 6 dimensions</span>
+    <button class="btn-primary" id="btn-c2tlx" onclick="goTo('scr-c2-sus',14)" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 15 — INTERFACE 2: SUS ═══ -->
+<div class="screen" id="scr-c2-sus">
+  <div class="sec-tag" id="c2sus-tag" style="color:var(--violet)">Interface 2 · Usability</div>
+  <h1 class="sec-title">How easy was this one?</h1>
+  <p class="sec-desc">Rate each statement about the <strong style="color:var(--violet)">second interface</strong>. 1 = Strongly disagree · 5 = Strongly agree.</p>
+  <div class="likert-wrap">
+    <table class="likert-tbl">
+      <thead><tr>
+        <th>Statement</th>
+        <th>1<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Disagree</span></th>
+        <th>2</th><th>3</th><th>4</th>
+        <th>5<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Agree</span></th>
+      </tr></thead>
+      <tbody id="c2-sus-body"></tbody>
+    </table>
+  </div>
+  <div class="btn-row">
+    <span class="hint-text" id="hint-c2sus">Rate all 10 items</span>
+    <button class="btn-primary" id="btn-c2sus" onclick="goTo('scr-p3a',15)" disabled>Continue to final evaluation →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 16 — THE MAP VIEW ═══ -->
+<div class="screen" id="scr-p3a">
+  <div class="sec-tag" style="color:var(--rose)">Evaluation · The map</div>
+  <h1 class="sec-title">What did you see in the map?</h1>
+  <p class="sec-desc">Now that you've used both interfaces, answer these questions specifically about the one with the <strong style="color:var(--cyan)">circular / radial layout</strong>.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q34.</span>Which of these best describes what you were looking at in the circular-layout interface?</label>
+    <div class="opt-grid" id="c1_type"></div>
+    <textarea class="q-textarea" id="c1_other" rows="2" placeholder="If 'Something else', describe it…" style="margin-top:10px;"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q35.</span>The directions of destinations on the map matched where they actually are — Lisbon to the west, Warsaw to the north, and so on. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
+    <div class="opt-grid" id="c2_bear"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q36.</span>In your own words: what does the <strong style="color:var(--cyan)">distance of a city from the centre</strong> of the map represent? There's no right or wrong answer here.</label>
+    <textarea class="q-textarea" id="c3" rows="3" placeholder="What did the distance seem to mean to you?"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q37.</span>The circular layout helped me understand which destinations fit my preferences best. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
+    <div class="opt-grid" id="c4_util"></div>
+  </div>
+
+  <div class="btn-row">
+    <span class="hint-text" id="hint-p3a">Answer Q34, Q35, and Q37 to continue</span>
+    <button class="btn-primary" id="btn-p3a" onclick="goTo('scr-p3b',16)" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 17 — TRUST & VALUE ═══ -->
+<div class="screen" id="scr-p3b">
+  <div class="sec-tag" style="color:var(--rose)">Evaluation · Trust & value</div>
+  <h1 class="sec-title">About the two interfaces</h1>
+  <p class="sec-desc">Rate each statement comparing both interfaces. <strong style="color:var(--text)">1 = Strongly disagree · 5 = Strongly agree.</strong></p>
+  <div class="likert-wrap">
+    <table class="likert-tbl">
+      <thead><tr>
+        <th>Statement</th>
+        <th>1<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Disagree</span></th>
+        <th>2</th><th>3</th><th>4</th>
+        <th>5<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Agree</span></th>
+      </tr></thead>
+      <tbody id="p3b-body"></tbody>
+    </table>
+  </div>
+  <div class="btn-row">
+    <span class="hint-text" id="hint-p3b">Rate all items to continue</span>
+    <button class="btn-primary" id="btn-p3b" onclick="goTo('scr-p3c',17)" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 18 — DESIGN ELEMENTS ═══ -->
+<div class="screen" id="scr-p3c">
+  <div class="sec-tag" style="color:var(--rose)">Evaluation · What worked</div>
+  <h1 class="sec-title">What worked, what didn't?</h1>
+  <p class="sec-desc">Rate specific design elements of the map+card interface. <strong style="color:var(--text)">1 = Strongly disagree · 5 = Strongly agree.</strong></p>
+  <div class="likert-wrap" style="margin-bottom:20px;">
+    <table class="likert-tbl">
+      <thead><tr>
+        <th>Statement</th>
+        <th>1<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Disagree</span></th>
+        <th>2</th><th>3</th><th>4</th>
+        <th>5<br/><span style="font-weight:300;font-size:9px">Strongly<br/>Agree</span></th>
+      </tr></thead>
+      <tbody id="p3c-body"></tbody>
+    </table>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q38.</span>In the map+card interface, which element was most useful for making your decision?</label>
+    <div class="opt-grid" id="c14_el"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q39.</span>Which element was least useful, or most confusing?</label>
+    <textarea class="q-textarea" id="c15" rows="2" placeholder="Describe briefly…"></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-p3d',18)">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 19 — PREFERENCE & ADOPTION ═══ -->
+<div class="screen" id="scr-p3d">
+  <div class="sec-tag" style="color:var(--rose)">Evaluation · Which would you use</div>
+  <h1 class="sec-title">Which would you actually use?</h1>
+  <p class="sec-desc">Your honest comparison of both interfaces.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q40.</span>For discovering destinations you hadn't thought of — which interface worked better for you?</label>
+    <div class="opt-grid" id="c16" style="margin-bottom:10px;"></div>
+    <textarea class="q-textarea" id="c16_why" rows="2" placeholder="Why?"></textarea>
+  </div>
+  
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q41.</span>Overall, the map+card interface was…</label>
+    <div class="opt-grid" id="c18"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q42.</span>I would use the map+card interface when planning my next leisure trip. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
+    <div class="opt-grid" id="c19"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q43.</span>Compared to tools I normally use for travel planning, the map+card interface was…</label>
+    <div class="opt-grid" id="c20"></div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q44.</span>If you could change one thing about the map+card interface, what would it be?</label>
+    <textarea class="q-textarea" id="c21" rows="3" placeholder="Your most important suggestion…"></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-p3e',19)">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 20 — REVISITING YOUR LIST ═══ -->
+<div class="screen" id="scr-p3e">
+  <div class="sec-tag" style="color:var(--rose)">Evaluation · Back to your list</div>
+  <h1 class="sec-title">Revisiting your destination list</h1>
+  <p class="sec-desc">Remember the destinations you named at the very start? Let's come back to that.</p>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q46.</span>Now that you've used both interfaces: name up to 3 destinations you'd consider for a summer trip from Vienna and a trip in december. These can be the same as before, or completely different.</label>
+    <div style="display:grid;gap:8px;">
+      <input class="q-input" id="c22a" placeholder="August" style="max-width:100%;"/>
+      <input class="q-input" id="c22b" placeholder="December" style="max-width:100%;"/>
+    </div>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q47.</span>Are any of these different from what you wrote at the start? If so, which interface led you to them?</label>
+    <textarea class="q-textarea" id="c23" rows="3" placeholder="e.g. 'Ljubljana is new — I saw it in the map view.' Or: 'Same destinations as before.'"></textarea>
+  </div>
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q48.</span>Would you rank the four criteria (travel time, cost, CO₂, popularity) any differently now compared to when you started?</label>
+    <div class="opt-grid" id="c24_yn" style="margin-bottom:10px;"></div>
+    <textarea class="q-textarea" id="c24_why" rows="3" placeholder="Explain any change, or why your ranking stayed the same…"></textarea>
+  </div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="goTo('scr-submit',20)">Continue to submission →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 21 — SUBMIT ═══ -->
+<div class="screen" id="scr-submit">
+  <div class="sec-tag" style="color:var(--green)">Final step</div>
+  <h1 class="sec-title">Almost done — submit your responses</h1>
+  <p class="sec-desc">Your responses will be sent securely to the research team and a backup file will be downloaded to your device automatically.</p>
+
+  <div class="info-box">
+    <strong>What happens when you submit:</strong><br/>
+    Your responses are sent to the researcher and a JSON backup is downloaded to your computer. Both copies ensure nothing is lost even if there is a connection error.
+  </div>
+
+  <div class="question">
+    <label class="q-label">Email address <em style="color:var(--muted)">(optional — only if you'd like to receive a summary of the findings)</em></label>
+    <input class="q-input" id="participant-email" type="email" placeholder="your@email.com" style="max-width:100%;"/>
+  </div>
+
+  <div id="submit-status" style="display:none;padding:14px 16px;border-radius:4px;margin-bottom:16px;font-size:13px;"></div>
+
+  <div class="btn-row">
+    <button class="btn-sec" onclick="downloadJSON()">↓ Download JSON backup</button>
+    <button class="btn-primary" id="btn-final-submit" onclick="submitAll()">Submit responses →</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 22 — DONE ═══ -->
+<div class="screen" id="scr-done">
+  <div class="center-screen">
+    <div style="font-size:48px;margin-bottom:16px;">✓</div>
+    <h2 class="big-title" style="font-size:36px;">Thank you.</h2>
+    <p style="color:var(--muted2);max-width:440px;line-height:1.8;margin-bottom:24px;">
+      Your responses have been submitted successfully.<br/>
+      Please wait for the facilitator's debrief before closing this tab.
+    </p>
+    <p style="font-size:11px;color:var(--muted);max-width:440px;line-height:1.7;">
+      Your data is pseudonymised and stored securely.<br/>
+      You may request deletion by contacting the researcher.
+    </p>
+    <button class="btn-sec" style="margin-top:20px;" onclick="downloadJSON()">↓ Download your response backup</button>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+const CONFIG = {
+  formspreeEndpoint: "https://formspree.io/f/xqejwzya",
+  interfaceMapCard:  "https://leslybautista.github.io/Wheretogo/",
+  interfaceCardOnly: "https://leslybautista.github.io/Wheretogolist/",
+  facCode: "wheretogo2026",
+};
+
+let STATE = { pid:"", session:"", order:"", cond1Label:"", cond2Label:"", currentScreen:"scr-welcome" };
+let DATA = {};
+let RANKS = { time:null, cost:null, co2:null, pop:null };
+
+const PERSONAS_A = [
+  { name:"Clara", color:"#22c55e",
+    profile:"Student, 24. Very tight budget — tracks every euro. Happy to take a long train. Prefers places that aren't touristy."
+     },
+  { name:"Marco", color:"#f59e0b",
+    profile:"Management consultant, 39. Time is his scarcest resource. Comfortable with higher costs. Likes well-connected, well-known cities." },
+  { name:"Sofia", color:"#f43f5e",
+    profile:"Teacher, 52. Wants a popular, well-reviewed destination she can plan in detail. Moderate budget, flexible on travel time." },
+];
+
+const PERSONAS_B = [
+  { name:"Jonas", color:"#06b6d4",
+    profile:"Freelance designer, 31. No fixed schedule. Prefers trains, genuinely cares about emissions. Happy off the beaten track.",
+    hint:"Set CO₂ and Cost high. Popularity low. Travel time not a concern." },
+  { name:"Lena", color:"#a78bfa",
+    profile:"Project manager, 42. Books last-minute. Speed and cost equally important. Not focused on sustainability.",
+    hint:"Set Travel time and Cost equally high. CO₂ lowest. Popularity moderate." },
+  { name:"David", color:"#fb923c",
+    profile:"Retired, 63. Sustainability is a genuine priority. Comfortable budget. Curious about lesser-known places.",
+    hint:"Set CO₂ dominant. Popularity low. Cost and Travel time secondary." },
+];
+
+const SUS_ITEMS = [
+  "I think that I would like to use this system frequently.",
+  "I found the system unnecessarily complex.",
+  "I thought the system was easy to use.",
+  "I think that I would need support from a technical person to use this system.",
+  "I found the various functions in this system were well integrated.",
+  "I thought there was too much inconsistency in this system.",
+  "I would imagine that most people would learn to use this system very quickly.",
+  "I found the system very cumbersome to use.",
+  "I felt very confident using the system.",
+  "I needed to learn a lot of things before I could get going with this system.",
+];
+
+const TLX_DIMS = [
+  { key:"mental",     label:"Mental demand",    def:"How much mental effort did this require?" },
+  { key:"physical",   label:"Physical demand",  def:"How much physical activity was required?" },
+  { key:"temporal",   label:"Time pressure",    def:"How rushed or pressed for time did you feel?" },
+  { key:"perf",       label:"Performance",      def:"How well do you think you accomplished what was asked?" },
+  { key:"effort",     label:"Effort",           def:"How hard did you have to work to get there?" },
+  { key:"frustration",label:"Frustration",      def:"How irritated, stressed, or annoyed did you feel?" },
+];
+
+const TOTAL_SCREENS = 21;
+const PHASE_SCREENS = {
+  0:["scr-p1a","scr-p1b","scr-p1c","scr-p1d"],
+  1:["scr-c1-orient","scr-c1-persona","scr-c1-self","scr-c1-tlx","scr-c1-sus"],
+  2:["scr-break"],
+  3:["scr-c2-orient","scr-c2-persona","scr-c2-self","scr-c2-tlx","scr-c2-sus"],
+  4:["scr-p3a","scr-p3b","scr-p3c","scr-p3d","scr-p3e","scr-submit","scr-done"],
+};
+
+function goTo(scrId, stepNum) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(scrId).classList.add('active');
+  STATE.currentScreen = scrId;
+  window.scrollTo(0,0);
+  document.getElementById('progressFill').style.width = Math.round((stepNum/TOTAL_SCREENS)*100)+'%';
+  for(let i=0;i<5;i++){
+    const dot=document.getElementById('pd'+i);
+    const phaseScreens=PHASE_SCREENS[i];
+    if(!dot)continue;
+    if(phaseScreens.includes(scrId)){dot.className='ph-dot active';}
+    else{
+      const allDoneIdx=Object.keys(PHASE_SCREENS).indexOf(String(i));
+      const currentPhaseIdx=Object.entries(PHASE_SCREENS).findIndex(([,screens])=>screens.includes(scrId));
+      dot.className=allDoneIdx<currentPhaseIdx?'ph-dot done':'ph-dot';
+    }
+  }
+  saveLocal();
+}
+
+function buildRadio(containerId,options,dataKey){
+  const el=document.getElementById(containerId);if(!el)return;el.innerHTML='';
+  options.forEach(opt=>{
+    const d=document.createElement('div');d.className='opt';
+    d.innerHTML=`<span class="opt-dot"></span>${opt}`;
+    d.onclick=()=>{el.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));d.classList.add('sel');DATA[dataKey]=opt;checkAll();};
+    el.appendChild(d);
+  });
+}
+
+function buildCheck(containerId,options,dataKey){
+  const el=document.getElementById(containerId);if(!el)return;el.innerHTML='';DATA[dataKey]=DATA[dataKey]||[];
+  options.forEach(opt=>{
+    const d=document.createElement('div');d.className='opt opt-sq';
+    d.innerHTML=`<span class="opt-dot"></span>${opt}`;
+    d.onclick=()=>{d.classList.toggle('sel');DATA[dataKey]=[...el.querySelectorAll('.opt.sel')].map(o=>o.textContent.trim());};
+    el.appendChild(d);
+  });
+}
+
+function buildLikert(tbodyId,items,prefix){
+  const tbody=document.getElementById(tbodyId);if(!tbody)return;tbody.innerHTML='';
+  items.forEach((item,idx)=>{
+    const key=`${prefix}_${idx+1}`;const tr=document.createElement('tr');tr.className='l-row';
+    let cells=`<td>${idx+1}. ${item}</td>`;
+    for(let i=1;i<=5;i++)cells+=`<td><div class="l-radio" onclick="setLikert('${tbodyId}','${key}',${i},this,${idx})"></div></td>`;
+    tr.innerHTML=cells;tbody.appendChild(tr);
+  });
+}
+
+function setLikert(tbodyId,key,val,el,rowIdx){
+  const tbody=document.getElementById(tbodyId);
+  tbody.querySelectorAll('tr.l-row')[rowIdx].querySelectorAll('.l-radio').forEach(r=>r.classList.remove('sel'));
+  el.classList.add('sel');DATA[key]=val;checkAll();
+}
+
+function buildTLX(containerId,prefix){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  el.innerHTML='';
+
+  TLX_DIMS.forEach(dim=>{
+    const key=`${prefix}_${dim.key}`;
+    const row=document.createElement('div');
+    row.className='tlx-row';
+
+    row.innerHTML=`
+      <div>
+        <div class="tlx-lbl">${dim.label}</div>
+        <div class="tlx-def">${dim.def}</div>
+      </div>
+      <div class="tlx-slider-wrap">
+        <input class="tlx-slider" type="range" min="1" max="20" value="1" step="1" list="${key}-ticks"
+          oninput="DATA['${key}']=parseInt(this.value)||'';document.getElementById('${key}-val').textContent=this.value;checkAll();">
+        <span class="tlx-val" id="${key}-val">1</span>
+        <datalist id="${key}-ticks">
+          <option value="1"><option value="2"><option value="3"><option value="4"><option value="5">
+          <option value="6"><option value="7"><option value="8"><option value="9"><option value="10">
+          <option value="11"><option value="12"><option value="13"><option value="14"><option value="15">
+          <option value="16"><option value="17"><option value="18"><option value="19"><option value="20">
+        </datalist>
+      </div>`;
+
+    el.appendChild(row);
+    DATA[key]=1;
+  });
+}
+
+function buildPersonas(containerId,personas){
+  const el=document.getElementById(containerId);if(!el)return;el.innerHTML='';
+  personas.forEach(p=>{
+    const card=document.createElement('div');card.className='persona-card';card.style.borderTopColor=p.color;
+    card.innerHTML=`<div class="pc-name" style="color:${p.color}">${p.name}</div>
+      <div class="pc-body">${p.profile}</div>`;
+    el.appendChild(card);
+  });
+}
+
+function buildLikertKeyed(tbodyId,items,keys){
+  const tbody=document.getElementById(tbodyId);if(!tbody)return;tbody.innerHTML='';
+  items.forEach((item,idx)=>{
+    const key=keys[idx];const tr=document.createElement('tr');tr.className='l-row';
+    let cells=`<td>${item}</td>`;
+    for(let i=1;i<=5;i++)cells+=`<td><div class="l-radio" onclick="setLikertKeyed('${tbodyId}','${key}',${i},this,${idx})"></div></td>`;
+    tr.innerHTML=cells;tbody.appendChild(tr);
+  });
+}
+
+function setLikertKeyed(tbodyId,key,val,el,rowIdx){
+  const tbody=document.getElementById(tbodyId);
+  tbody.querySelectorAll('tr.l-row')[rowIdx].querySelectorAll('.l-radio').forEach(r=>r.classList.remove('sel'));
+  el.classList.add('sel');DATA[key]=val;checkAll();
+}
+
+function setRank(criterion,value){
+  Object.keys(RANKS).forEach(k=>{if(RANKS[k]===value&&k!==criterion)RANKS[k]=null;});
+  RANKS[criterion]=value;
+  ['time','cost','co2','pop'].forEach(k=>{
+    const rn=document.getElementById('rn-'+k);if(rn)rn.textContent=RANKS[k]||'—';
+    document.querySelectorAll(`#rk-${k} .rank-btn`).forEach((btn,i)=>btn.classList.toggle('sel',RANKS[k]===i+1));
+  });
+  DATA['b10_time']=RANKS.time;DATA['b10_cost']=RANKS.cost;DATA['b10_co2']=RANKS.co2;DATA['b10_pop']=RANKS.pop;
+  checkAll();
+}
+
+function selectOrder(order,el){
+  document.querySelectorAll('#scr-welcome .opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');STATE.order=order;checkStart();
+}
+
+function checkStart(){
+  const pidOk=document.getElementById('inp-pid').value.trim().length>0;
+  const sessionOk=document.getElementById('inp-session').value.trim().length>0;
+  document.getElementById('btnStart').disabled=!(pidOk&&sessionOk&&STATE.order);
+}
+
+function startStudy(){
+  STATE.pid=document.getElementById('inp-pid').value.trim().toUpperCase();
+  STATE.session=document.getElementById('inp-session').value.trim();
+  if(STATE.order==='AB'){
+    STATE.cond1Label='Map + Card View';STATE.cond2Label='Card Only View';
+    document.getElementById('c1-link').href=CONFIG.interfaceMapCard;
+    document.getElementById('c2-link').href=CONFIG.interfaceCardOnly;
+  }else{
+    STATE.cond1Label='Card Only View';STATE.cond2Label='Map + Card View';
+    document.getElementById('c1-link').href=CONFIG.interfaceCardOnly;
+    document.getElementById('c2-link').href=CONFIG.interfaceMapCard;
+  }
+  document.getElementById('c1-tag').textContent=`Interface 1 · ${STATE.cond1Label}`;
+  document.getElementById('c1-title').textContent=`Take a look around — ${STATE.cond1Label}`;
+  document.getElementById('c1p-tag').textContent=`Interface 1 · ${STATE.cond1Label} · Exercises`;
+  document.getElementById('c1s-tag').textContent=`Interface 1 · ${STATE.cond1Label} · Your trip`;
+  document.getElementById('c1tlx-tag').textContent=`Interface 1 · ${STATE.cond1Label} · Mental load`;
+  document.getElementById('c1sus-tag').textContent=`Interface 1 · ${STATE.cond1Label} · Usability`;
+  document.getElementById('c2-tag').textContent=`Interface 2 · ${STATE.cond2Label}`;
+  document.getElementById('c2-title').textContent=`A different interface — ${STATE.cond2Label}`;
+  document.getElementById('c2p-tag').textContent=`Interface 2 · ${STATE.cond2Label} · Exercises`;
+  document.getElementById('c2s-tag').textContent=`Interface 2 · ${STATE.cond2Label} · Your trip`;
+  document.getElementById('c2tlx-tag').textContent=`Interface 2 · ${STATE.cond2Label} · Mental load`;
+  document.getElementById('c2sus-tag').textContent=`Interface 2 · ${STATE.cond2Label} · Usability`;
+  document.getElementById('pidBadge').style.display='';
+  document.getElementById('pidDisplay').textContent=STATE.pid;
+  document.getElementById('orderDisplay').textContent=STATE.order;
+  document.getElementById('phaseBar').style.display='';
+  DATA.pid=STATE.pid;DATA.session=STATE.session;DATA.order=STATE.order;DATA.startedAt=new Date().toISOString();
+  goTo('scr-p1a',1);
+}
+
+function collectAll(){
+  const textIds=['b3','b5','b11','b12a','b12a_why','b12b','b12b_why','b12c','b12c_why','b13',
+    'e0','e1a','e1b','e1c','e1d','e4','e5','e6','e7_dest','e8',
+    'f0','f1a','f1b','f1c','f1d','f4','f5','f6','f7_dest','f8',
+    'c3','c15','c1_other','c16_why','c17_why','c21','c22a','c22b','c23','c24_why'];
+  textIds.forEach(id=>{const el=document.getElementById(id);if(el)DATA[id]=el.value;});
+  DATA.participantEmail=document.getElementById('participant-email')?.value||'';
+  DATA.collectedAt=new Date().toISOString();
+}
+
+function checkAll(){
+  const p1aOk=DATA.b1&&DATA.b2&&DATA.b4;
+  const btn1a=document.getElementById('btn-p1a');if(btn1a)btn1a.disabled=!p1aOk;
+  const h1a=document.getElementById('hint-p1a');if(h1a)h1a.textContent=p1aOk?'':'Answer Q1, Q2, and Q4 to continue';
+  const p1bOk=DATA.b6&&DATA.b8&&DATA.b9;
+  const btn1b=document.getElementById('btn-p1b');if(btn1b)btn1b.disabled=!p1bOk;
+  const p1cOk=RANKS.time&&RANKS.cost&&RANKS.co2&&RANKS.pop;
+  const btn1c=document.getElementById('btn-p1c');if(btn1c)btn1c.disabled=!p1cOk;
+  const h1c=document.getElementById('hint-p1c');if(h1c)h1c.textContent=p1cOk?'':'Assign all four ranks (each unique) to continue';
+  const c1tlxOk=TLX_DIMS.every(d=>{const v=DATA[`c1tlx_${d.key}`];return v&&v>=1&&v<=20;});
+  const btnc1tlx=document.getElementById('btn-c1tlx');if(btnc1tlx)btnc1tlx.disabled=!c1tlxOk;
+  const c1susOk=SUS_ITEMS.every((_,i)=>DATA[`c1sus_${i+1}`]);
+  const btnc1sus=document.getElementById('btn-c1sus');if(btnc1sus)btnc1sus.disabled=!c1susOk;
+  const c2tlxOk=TLX_DIMS.every(d=>{const v=DATA[`c2tlx_${d.key}`];return v&&v>=1&&v<=20;});
+  const btnc2tlx=document.getElementById('btn-c2tlx');if(btnc2tlx)btnc2tlx.disabled=!c2tlxOk;
+  const c2susOk=SUS_ITEMS.every((_,i)=>DATA[`c2sus_${i+1}`]);
+  const btnc2sus=document.getElementById('btn-c2sus');if(btnc2sus)btnc2sus.disabled=!c2susOk;
+  const p3aOk=DATA.c1_type&&DATA.c2_bear&&DATA.c4_util;
+  const btnp3a=document.getElementById('btn-p3a');if(btnp3a)btnp3a.disabled=!p3aOk;
+  const hp3a=document.getElementById('hint-p3a');if(hp3a)hp3a.textContent=p3aOk?'':'Answer Q34, Q35, and Q37 to continue';
+  const p3bOk=['c5','c6','c7','c8','c9','c10', 'c11'].every(k=>DATA[k]);
+  const btnp3b=document.getElementById('btn-p3b');if(btnp3b)btnp3b.disabled=!p3bOk;
+  saveStatus('saving');
+}
+
+function saveLocal(){
+  collectAll();
+  try{localStorage.setItem('wheretogo_'+(STATE.pid||'draft'),JSON.stringify({STATE,DATA,RANKS}));saveStatus('saved');}
+  catch(e){saveStatus('error');}
+}
+
+function saveStatus(st){
+  const el=document.getElementById('saveStatus');if(!el)return;
+  const states={saving:['var(--amber)','saving…'],saved:['var(--green)','saved locally'],error:['var(--rose)','save error'],sent:['var(--cyan)','submitted ✓']};
+  const[color,text]=states[st]||['var(--muted)',''];
+  el.innerHTML=`<span class="save-dot" style="background:${color}"></span><span style="color:${color}">${text}</span>`;
+}
+
+async function submitAll(){
+  collectAll();
+  const btn=document.getElementById('btn-final-submit');
+  const status=document.getElementById('submit-status');
+  btn.disabled=true;btn.textContent='Submitting…';
+  downloadJSON();
+  if(CONFIG.formspreeEndpoint.includes('YOUR_FORM_ID')){
+    status.style.display='block';status.style.background='rgba(245,158,11,.08)';
+    status.style.border='1px solid rgba(245,158,11,.3)';status.style.color='var(--amber)';
+    status.innerHTML='⚠ Formspree not configured. Your responses have been downloaded as a JSON file — please send it to the researcher.';
+    btn.disabled=false;btn.textContent='Download backup again';btn.onclick=downloadJSON;return;
+  }
+  try{
+    const payload={...DATA,_subject:`WhereToGo Study — ${DATA.pid} — ${DATA.session} — ${DATA.order}`,_replyto:DATA.participantEmail||'no-email@study.wheretogo'};
+    const res=await fetch(CONFIG.formspreeEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+    if(res.ok){saveStatus('sent');goTo('scr-done',21);}
+    else throw new Error('Server error '+res.status);
+  }catch(err){
+    status.style.display='block';status.style.background='rgba(244,63,94,.08)';
+    status.style.border='1px solid rgba(244,63,94,.3)';status.style.color='var(--rose)';
+    status.innerHTML=`Submission failed (${err.message}). Your JSON backup has been downloaded — please send it to the researcher manually.`;
+    btn.disabled=false;btn.textContent='Try again';
+  }
+}
+
+function downloadJSON(){
+  collectAll();
+  const blob=new Blob([JSON.stringify({STATE,DATA,RANKS},null,2)],{type:'application/json;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=`wheretogo_${STATE.pid||'draft'}_${STATE.session||'s0'}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();URL.revokeObjectURL(url);
+}
+
+function init(){
+  buildRadio('b1',['18–24','25–34','35–44','45–54','55–65'],'b1');
+  buildRadio('b2',['Woman','Man','Non-binary / other','Prefer not to say'],'b2');
+  buildRadio('b4',["Secondary","Bachelor's","Master's","Doctoral","Other"],'b4');
+  buildRadio('b6',['0','1–2','3–5','6+'],'b6');
+  buildCheck('b7',['Social media','Travel agency','Online search platform','Map','Other'],'b7');
+  buildRadio('b8',['Never heard of them.','Heard of them, but do not understand them.','Understand the general concept.','Understand them and have created some.'],'b8');
+  buildRadio('b9',['Never used them','Have used them, but do not feel comfortable using them','Somewhat comfortable','Comfortable','Very comfortable '],'b9');
+  buildPersonas('c1-personas',PERSONAS_A);
+  buildPersonas('c2-personas',PERSONAS_B);
+  buildRadio('e1b_rate',['1','2','3','4','5'],'e1b_rate');
+  buildRadio('f1b_rate',['1','2','3','4','5'],'f1b_rate');
+  buildRadio('e7_conf',['1 — Not at all','2','3','4','5 — Very confident'],'e7_conf');
+  buildRadio('f7_conf',['1 — Not at all','2','3','4','5 — Very confident'],'f7_conf');
+  buildTLX('c1-tlx-grid','c1tlx');buildTLX('c2-tlx-grid','c2tlx');
+  buildLikert('c1-sus-body',SUS_ITEMS,'c1sus');buildLikert('c2-sus-body',SUS_ITEMS,'c2sus');
+  buildRadio('c1_type',['A geographic map','A data chart or graph','A diagram','Something else'],'c1_type');
+  buildRadio('c2_bear',['1','2','3','4','5'],'c2_bear');
+  buildRadio('c4_util',['1','2','3','4','5'],'c4_util');
+ buildLikertKeyed('p3b-body', [
+  // 1. Trust en cada interface (por separado)
+  'I trust the destinations shown by the map+card interface as good matches for my preferences.',
+  'I trust the destinations shown by the card-only interface as good matches for my preferences.',
+  
+  // 2. Valor agregado del mapa (beneficios positivos)
+  'The map layout helped me trust the results more than the list alone would have.',
+  'The map made it easier to notice destinations I would not have considered otherwise.',
+  'The map added useful information beyond what the ranked list already showed.',
+  
+  // 3. Positiva → Negativa (contrapunto)
+  'The map confused me about which destination was actually the best match.',
+  
+  // 4. Efecto de orden (nueva pregunta)
+  'My experience with the first interface influenced how I used the second.',
+  'When browsing the list, I thought about where destinations are geographically'
+], ['c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11','c12']);
+  buildLikertKeyed('p3c-body',[
+    'The concentric rings on the map helped me understand how well each destination matched my preferences.',
+    'The size and colour of destination markers communicated something useful.',
+    'The destination cards showed the right level of detail.',
+  ],['c11','c12','c13']);
+  buildRadio('c14_el',['Map position of a destination','Destination card details','Preference sliders','Tooltip / popup details','legend','Sort controls'],'c14_el');
+  buildRadio('c16',['Map+Card','Card Only','Both equally'],'c16');
+  buildRadio('c17',['Map+Card','Card Only','Both equally'],'c17');
+  buildRadio('c18',['The best part of the tool','Useful but not essential','Neutral','More confusing than helpful','The main problem with the tool'],'c18');
+  buildRadio('c19',['1','2','3','4','5'],'c19');
+  buildRadio('c20',['Much worse','Slightly worse','About the same','Slightly better','Much better'],'c20');
+  buildRadio('c24_yn',['Yes, I would rank them differently now','No, my ranking is the same'],'c24_yn');
+  ['inp-pid','inp-session'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',checkStart);});
+  document.addEventListener('input',()=>{saveLocal();});
+  document.addEventListener('change',()=>{saveLocal();});
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
