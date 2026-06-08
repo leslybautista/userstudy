@@ -926,11 +926,6 @@ body::before{
     <textarea class="q-textarea" name="q18c" rows="3" placeholder="e.g. Destinations to the north of the map moved in/out as I changed the popularity weight…"></textarea>
   </div>
 
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q18.</span>Looking at all three profiles together — did the interface respond consistently? Were there any changes that felt wrong or confusing?</label>
-    <textarea class="q-textarea" id="e1d" rows="3" placeholder="Overall reflection…"></textarea>
-  </div>
-
   <div class="btn-row">
     <button class="btn-primary" onclick="goTo('scr-c1-self',6)">Continue →</button>
   </div>
@@ -1169,10 +1164,7 @@ body::before{
     <textarea class="q-textarea" name="q28b" rows="3" placeholder="Describe any result that felt inconsistent with the traveler's priorities…"></textarea>
   </div>
 
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q28.</span>Looking at all three profiles together — did the interface respond consistently? Were there any changes that felt wrong or confusing?</label>
-    <textarea class="q-textarea" id="f1d" rows="3" placeholder="Overall reflection…"></textarea>
-  </div>
+
 
   <div class="btn-row">
     <button class="btn-primary" onclick="goTo('scr-c2-self',12)">Continue →</button>
@@ -1262,15 +1254,11 @@ body::before{
     <div class="opt-grid" id="c2_bear"></div>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q35b.</span>The circular layout encouraged me to consider destinations in directions I wouldn't have looked at in a ranked list — e.g. I noticed destinations to the east, or places I hadn't thought of before. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
-    <div class="opt-grid" id="c_exp2"></div>
-  </div>
-  <div class="question">
     <label class="q-label"><span class="q-num">Q36.</span>In your own words: what does the <strong style="color:var(--cyan)">distance of a city from the centre</strong> of the map represent? There's no right or wrong answer here.</label>
     <textarea class="q-textarea" id="c3" rows="3" placeholder="What did the distance seem to mean to you?"></textarea>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q37.</span>The circular layout helped me understand which destinations fit my preferences best. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
+    <label class="q-label"><span class="q-num">Q37.</span>The circular layout helped me understand which destinations fit my preferences best — better than the card-only interface did. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
     <div class="opt-grid" id="c4_util"></div>
   </div>
 
@@ -1352,7 +1340,7 @@ body::before{
   </div>
   
   <div class="question">
-    <label class="q-label"><span class="q-num">Q41.</span>Overall, the map+card interface was…</label>
+    <label class="q-label"><span class="q-num">Q41.</span>Overall, having the circular map view available in addition to the destination cards was:</label>
     <div class="opt-grid" id="c18"></div>
   </div>
   <div class="question">
@@ -1820,15 +1808,15 @@ function init(){
   // C6 — Trust in card-only results
   'I trust the destinations shown by the card-only interface as good matches for my preferences.',
   // C7 — Map+card made me more confident than card-only
-  'The map layout helped me trust the results more than the list alone would have.',
+  'The map+card interface helped me feel more confident about the results than the card-only interface did.',
   // C8 — Easier to notice unconsidered destinations
-  'The map made it easier to notice destinations I would not have considered otherwise.',
+  'The map+card interface made it easier to notice destinations I would not have considered, compared to the card-only interface.',
   // C_EXP3 — Exploration breadth
   'The map+card interface led me to explore options more broadly, rather than just compare the top-ranked cards.',
   // C9 — Added value beyond the list alone
-  'The map added useful information beyond what the ranked list already showed.',
+  'Having the map view available alongside the cards provided something I could not get from the cards alone.',
   // C10 — Harder to identify best match (negative)
-  'The map confused me about which destination was actually the best match.',
+  'The circular layout in the map+card interface made it harder to identify which destination was the best match for me.',
   // C11 — Order effect
   'My experience with the first interface influenced how I used the second.',
   // C12 — Geographical thinking
