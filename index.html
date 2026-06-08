@@ -1851,6 +1851,32 @@ function init(){
   document.addEventListener('change',()=>{saveLocal();});
 }
 
+// Restore study state if page was refreshed mid-session
+(function restoreStudyState(){
+  try {
+    // find any saved study key
+    const key = Object.keys(localStorage).find(k => k.startsWith('wheretogo_') && k !== 'wheretogo_draft');
+    if(!key) return;
+    const saved = JSON.parse(localStorage.getItem(key));
+    if(!saved?.STATE?.pid) return;
+    // restore STATE
+    Object.assign(STATE, saved.STATE);
+    // re-apply link hrefs
+    if(STATE.order === 'AB'){
+      document.getElementById('c1-link').href = CONFIG.interfaceMapCard  + `?c=A&p=${STATE.pid}`;
+      document.getElementById('c2-link').href = CONFIG.interfaceCardOnly + `?c=B&p=${STATE.pid}`;
+    } else {
+      document.getElementById('c1-link').href = CONFIG.interfaceCardOnly + `?c=B&p=${STATE.pid}`;
+      document.getElementById('c2-link').href = CONFIG.interfaceMapCard  + `?c=A&p=${STATE.pid}`;
+    }
+    // re-apply labels
+    document.getElementById('c2-tag').textContent   = `Interface 2 · ${STATE.cond2Label}`;
+    document.getElementById('c2-title').textContent = `A different interface — ${STATE.cond2Label}`;
+    document.getElementById('pidDisplay').textContent  = STATE.pid;
+    document.getElementById('orderDisplay').textContent = STATE.order;
+  } catch(_){}
+})();
+
 document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
