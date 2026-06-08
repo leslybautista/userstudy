@@ -1444,24 +1444,41 @@ let RANKS = { time:null, cost:null, co2:null, pop:null };
 
 const PERSONAS_A = [
   { name:"Clara", color:"#22c55e",
-    profile:"Student, 24. Very tight budget — tracks every euro. Happy to take a long train. Prefers places that aren't touristy."
+    profile:"Student, 24. Clara loves spontaneous weekend trips and spends a lot of time looking for cheap travel deals. She enjoys wandering through neighborhoods, visiting cafés, flea markets, and local festivals rather than checking off famous landmarks. She avoids destinations that feel overcrowded or overly commercialized and doesn't mind spending an extra five hours on a train if it saves money and reduces her environmental impact. She usually stays in hostels or budget apartments and prefers cooking some of her own meals."
      },
   { name:"Marco", color:"#f59e0b",
-    profile:"Management consultant, 39. Time is his scarcest resource. Comfortable with higher costs. Likes well-connected, well-known cities." },
+    profile:"Marco travels often and values comfort and convenience. He likes destinations where everything works smoothly: direct flights, efficient public transport, and plenty of good restaurants and hotels. His ideal city break combines fine dining, modern architecture, and a few iconic attractions. He doesn't enjoy complicated itineraries or long transfers and is happy to pay more for a premium experience with minimal hassle." },
   { name:"Sofia", color:"#f43f5e",
-    profile:"Teacher, 52. Wants a popular, well-reviewed destination she can plan in detail. Moderate budget, flexible on travel time." },
+    profile:"Teacher, 52. Sofia enjoys well-planned holidays where she can mix culture with relaxation. She likes museums, historic city centers, guided walking tours, and beautiful parks, but also enjoys sitting at a terrace café and people-watching. Before booking, she reads reviews, watches travel videos, and creates a detailed itinerary. She prefers destinations with a good reputation for safety and hospitality and usually books accommodation well in advance to avoid surprises." },
 ];
 
 const PERSONAS_B = [
-  { name:"Jonas", color:"#06b6d4",
-    profile:"Freelance designer, 31. No fixed schedule. Prefers trains, genuinely cares about emissions. Happy off the beaten track.",
-    hint:"Set CO₂ and Cost high. Popularity low. Travel time not a concern." },
-  { name:"Lena", color:"#a78bfa",
-    profile:"Project manager, 42. Books last-minute. Speed and cost equally important. Not focused on sustainability.",
-    hint:"Set Travel time and Cost equally high. CO₂ lowest. Popularity moderate." },
-  { name:"David", color:"#fb923c",
-    profile:"Retired, 63. Sustainability is a genuine priority. Comfortable budget. Curious about lesser-known places.",
-    hint:"Set CO₂ dominant. Popularity low. Cost and Travel time secondary." },
+  {
+    name: "Jonas",
+    color: "#06b6d4",
+    profile:
+      "Freelance designer, 31. Loves slow travel and often takes trains across Europe while working remotely. Prefers small cities and nature over famous attractions, enjoys staying in local guesthouses, and tries to keep his trips as environmentally friendly as possible.",
+    hint:
+      "Prioritize CO₂ emissions and Cost. Travel time is least important. Popularity should be low."
+  },
+
+  {
+    name: "Lena",
+    color: "#a78bfa",
+    profile:
+      "Project manager, 42. Takes short city breaks whenever she finds a free weekend. She likes lively destinations with good restaurants and cultural activities but wants to get there quickly and without spending too much. Sustainability rarely influences her decision.",
+    hint:
+      "Balance Travel time and Cost. Popularity moderately important. CO₂ lowest priority."
+  },
+
+  {
+    name: "David",
+    color: "#fb923c",
+    profile:
+      "Recently retired, 63. Enjoys exploring places that most tourists overlook, especially destinations with beautiful landscapes and local traditions. He has a comfortable budget, isn't in a hurry, and prefers lower-impact ways of traveling whenever possible.",
+    hint:
+      "CO₂ should dominate. Popularity should be low. Cost and Travel time are secondary."
+  }
 ];
 
 const SUS_ITEMS = [
