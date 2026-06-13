@@ -320,29 +320,6 @@ body::before{
   display:block;
 }
 
-/* ── Rank list ─────────────────────────────────────────────────────────── */
-.rank-grid{display:grid;gap:6px;}
-.rank-item{
-  display:flex;align-items:center;gap:10px;
-  background:var(--s1);border:1px solid var(--border2);
-  border-radius:var(--r-xs);padding:10px 14px;
-}
-.rank-num{font-size:10px;color:var(--cyan);letter-spacing:.08em;width:20px;text-align:center;}
-.rank-label{font-size:13px;color:var(--text);flex:1;}
-.rank-sel{display:flex;gap:6px;}
-.rank-btn{
-  width:28px;height:28px;border-radius:4px;
-  background:var(--s2);border:1px solid var(--border2);
-  color:var(--muted);font-family:var(--mono);font-size:11px;
-  cursor:pointer;transition:all .18s;
-  display:flex;align-items:center;justify-content:center;
-}
-.rank-btn:hover{border-color:var(--cyan2);color:var(--text);}
-.rank-btn.sel{
-  background:var(--cyan);border-color:var(--cyan);
-  color:var(--bg);font-weight:500;
-}
-
 /* ── Info / warning boxes ──────────────────────────────────────────────── */
 .info-box{
   background:rgba(125,211,192,.05);
@@ -682,54 +659,13 @@ body::before{
   <p class="sec-desc">Before you see any interface, tell us how you currently weigh things up when choosing a destination.</p>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q10.</span>Rank these four factors from <strong style="color:var(--amber)">1 (most important)</strong> to <strong style="color:var(--amber)">4 (least important)</strong>. Each number can only be used once.</label>
+    <label class="q-label"><span class="q-num">Q10.</span>Which factor matters <strong style="color:var(--amber)">most</strong> to you when choosing a destination?</label>
     <div class="q-note">Think about how you actually decide — not how you think you should.</div>
-    <div class="rank-grid" id="rankGrid">
-      <div class="rank-item" id="rk-time">
-        <span class="rank-num" id="rn-time">—</span>
-        <span class="rank-label">Travel time to get there</span>
-        <div class="rank-sel">
-          <div class="rank-btn" onclick="setRank('time',1)">1</div>
-          <div class="rank-btn" onclick="setRank('time',2)">2</div>
-          <div class="rank-btn" onclick="setRank('time',3)">3</div>
-          <div class="rank-btn" onclick="setRank('time',4)">4</div>
-        </div>
-      </div>
-      <div class="rank-item" id="rk-cost">
-        <span class="rank-num" id="rn-cost">—</span>
-        <span class="rank-label">Financial cost (transport + accommodation)</span>
-        <div class="rank-sel">
-          <div class="rank-btn" onclick="setRank('cost',1)">1</div>
-          <div class="rank-btn" onclick="setRank('cost',2)">2</div>
-          <div class="rank-btn" onclick="setRank('cost',3)">3</div>
-          <div class="rank-btn" onclick="setRank('cost',4)">4</div>
-        </div>
-      </div>
-      <div class="rank-item" id="rk-co2">
-        <span class="rank-num" id="rn-co2">—</span>
-        <span class="rank-label">Environmental impact</span>
-        <div class="rank-sel">
-          <div class="rank-btn" onclick="setRank('co2',1)">1</div>
-          <div class="rank-btn" onclick="setRank('co2',2)">2</div>
-          <div class="rank-btn" onclick="setRank('co2',3)">3</div>
-          <div class="rank-btn" onclick="setRank('co2',4)">4</div>
-        </div>
-      </div>
-      <div class="rank-item" id="rk-pop">
-        <span class="rank-num" id="rn-pop">—</span>
-        <span class="rank-label">How popular or well-known the destination is</span>
-        <div class="rank-sel">
-          <div class="rank-btn" onclick="setRank('pop',1)">1</div>
-          <div class="rank-btn" onclick="setRank('pop',2)">2</div>
-          <div class="rank-btn" onclick="setRank('pop',3)">3</div>
-          <div class="rank-btn" onclick="setRank('pop',4)">4</div>
-        </div>
-      </div>
-    </div>
+    <div class="opt-grid" id="b10"></div>
   </div>
 
   <div class="btn-row">
-    <span class="hint-text" id="hint-p1c">Assign all four ranks (each unique) to continue</span>
+    <span class="hint-text" id="hint-p1c">Select the most important factor to continue</span>
     <button class="btn-primary" id="btn-p1c" onclick="goTo('scr-p1d',3)" disabled>Continue →</button>
   </div>
 </div>
@@ -745,7 +681,7 @@ body::before{
   </div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q12.</span>Name up to 5 destinations you'd consider.</label>
+    <label class="q-label"><span class="q-num">Q12.</span>Name up to 3 destinations you'd consider.</label>
     <div style="display:grid;gap:12px;">
       <div>
         <div style="font-size:10px;color:var(--cyan);letter-spacing:.08em;margin-bottom:5px;">August </div>
@@ -795,7 +731,7 @@ body::before{
 <!-- ═══ SCREEN 6 — INTERFACE 1: PERSONAS ═══ -->
 <div class="screen" id="scr-c1-persona">
   <div class="sec-tag" id="c1p-tag" style="color:var(--amber)">Interface 1 · Exercises</div>
-  <h1 class="sec-title">Three travelers, three scenarios</h1>
+  <h1 class="sec-title">Two travelers, two scenarios</h1>
   <p class="sec-desc">For each traveler below: open the interface, set the <strong style="color:var(--text)">origin city</strong> shown in their profile, adjust the preference sliders to match their priorities, and answer all questions before moving on to the next traveler.</p>
 
   <div class="persona-cards">
@@ -815,46 +751,16 @@ body::before{
   <div style="font-size:10px;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Traveler 1 — Clara</div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q15a.</span>Set the sliders to match Clara's priorities and note the approximate weights here:</label>
-    <table style="width:100%;border-collapse:collapse;margin:10px 0 6px;">
-      <thead>
-        <tr>
-          <th style="text-align:left;font-size:10px;color:var(--muted);letter-spacing:.08em;font-weight:400;padding-bottom:8px;">Criterion</th>
-          <th style="text-align:left;font-size:10px;color:var(--muted);letter-spacing:.08em;font-weight:400;padding-bottom:8px;padding-left:12px;">Weight (%)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">Travel time</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q15a_time" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">Cost</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q15a_cost" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">CO₂ emissions</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q15a_co2" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">Popularity</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q15a_pop" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="font-size:12px;color:var(--muted2);margin-top:8px;">
-      Did you use a preset (e.g. <em>Cheapest</em>, <em>Hidden Gems</em>) or set custom weights?
-      &nbsp;<label style="cursor:pointer;"><input type="radio" name="q15a_mode" value="preset"> Preset</label>
-      &nbsp;<label style="cursor:pointer;margin-left:12px;"><input type="radio" name="q15a_mode" value="custom"> Custom weights</label>
-    </div>
+    <label class="q-label"><span class="q-num">Q15a.</span>After setting the preferences for Clara, which element was the most important?</label>
+    <div class="opt-grid" id="e_clara_imp"></div>
   </div>
 
   <div class="question">
     <label class="q-label"><span class="q-num">Q15b.</span>What are the top 3 destinations shown for Clara (in order, as listed in the card panel)?</label>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">① <input type="text" name="q15b_1" placeholder="1st destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">② <input type="text" name="q15b_2" placeholder="2nd destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">③ <input type="text" name="q15b_3" placeholder="3rd destination" class="q-input" style="width:160px;"></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">① <input type="text" id="q15b_1" placeholder="1st destination" class="q-input" style="width:160px;"></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">② <input type="text" id="q15b_2" placeholder="2nd destination" class="q-input" style="width:160px;"></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">③ <input type="text" id="q15b_3" placeholder="3rd destination" class="q-input" style="width:160px;"></span>
     </div>
   </div>
 
@@ -865,14 +771,14 @@ body::before{
   <div style="font-size:10px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Traveler 2 — Marco</div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q16.</span>Compared to Clara's results, did destinations on the preference map shift noticeably when you changed the sliders to Marco's priorities? Did the change feel <em>proportional and logical?</em> <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
+    <label class="q-label"><span class="q-num">Q16.</span>Compared to Clara's results, <span class="c1-map-text">did destinations on the preference map (circular map)</span><span class="c1-card-text" style="display:none">did the destination cards</span> shift noticeably when you changed the sliders to Marco's priorities? Did the change feel <em>proportional and logical?</em> <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
     <div class="opt-grid" style="margin-bottom:10px;" id="e1b_rate"></div>
     <textarea class="q-textarea" id="e1b" rows="3" placeholder="What changed, and did it make sense?"></textarea>
   </div>
 
   <div class="question map-only-q">
     <label class="q-label"><span class="q-num">Q16b.</span>On the preference map, did some destinations move <em>closer to or farther from the center</em> as expected given Marco's priorities? Describe one example.</label>
-    <textarea class="q-textarea" name="q16d" rows="3" placeholder="e.g. London moved closer to the center because travel time was now less penalized…"></textarea>
+    <textarea class="q-textarea" id="q16d" rows="3" placeholder="e.g. London moved closer to the center because travel time was now less penalized…"></textarea>
   </div>
 
 
@@ -886,12 +792,12 @@ body::before{
 
   <div class="question">
     <label class="q-label"><span class="q-num">Q18b.</span>Were there results that felt wrong or counterintuitive — a destination ranked too high or too low given the priorities set? Describe briefly.</label>
-    <textarea class="q-textarea" name="q18b" rows="3" placeholder="Describe any result that felt inconsistent with the traveler's priorities…"></textarea>
+    <textarea class="q-textarea" id="q18b" rows="3" placeholder="Describe any result that felt inconsistent with the traveler's priorities…"></textarea>
   </div>
 
   <div class="question map-only-q">
     <label class="q-label"><span class="q-num">Q18c.</span>Did the <em>spatial arrangement</em> of destinations on the preference map help you understand why certain places ranked higher or lower? If yes, give a specific example.</label>
-    <textarea class="q-textarea" name="q18c" rows="3" placeholder="e.g. Destinations to the north of the preference map moved in/out as I changed the popularity weight…"></textarea>
+    <textarea class="q-textarea" id="q18c" rows="3" placeholder="e.g. Destinations to the north of the preference map moved in/out as I changed the popularity weight…"></textarea>
   </div>
 
   <div class="btn-row">
@@ -1003,7 +909,7 @@ body::before{
 <!-- ═══ SCREEN 12 — INTERFACE 2: PERSONAS ═══ -->
 <div class="screen" id="scr-c2-persona">
   <div class="sec-tag" id="c2p-tag" style="color:var(--violet)">Interface 2 · Exercises</div>
-  <h1 class="sec-title">Three travelers, three scenarios</h1>
+  <h1 class="sec-title">Two travelers, two scenarios</h1>
   <p class="sec-desc">For each traveler below: open the interface, set the <strong style="color:var(--text)">origin city</strong> shown in their profile, adjust the preference sliders to match their priorities, and answer all questions before moving on to the next traveler.</p>
 
   <div class="persona-cards">
@@ -1023,37 +929,16 @@ body::before{
   <div style="font-size:10px;color:#06b6d4;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Traveler 1 — Jonas</div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q25a.</span>Set the sliders to match Jonas's priorities and note the approximate weights here:</label>
-    <table style="width:100%;border-collapse:collapse;margin:10px 0 6px;">
-      <thead>
-        <tr>
-          <th style="text-align:left;font-size:10px;color:var(--muted);letter-spacing:.08em;font-weight:400;padding-bottom:8px;">Criterion</th>
-          <th style="text-align:left;font-size:10px;color:var(--muted);letter-spacing:.08em;font-weight:400;padding-bottom:8px;padding-left:12px;">Weight (%)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">Travel time</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q25a_time" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">Cost</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q25a_cost" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">CO₂ emissions</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q25a_co2" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-        <tr style="border-top:1px solid var(--border);">
-          <td style="padding:8px 0;font-size:13px;color:var(--muted2);">Popularity</td>
-          <td style="padding:8px 0 8px 12px;"><input type="number" name="q25a_pop" min="0" max="100" placeholder="0–100" class="q-input" style="width:100px;" autocomplete="off"></td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="font-size:12px;color:var(--muted2);margin-top:8px;">
-      Did you use a preset or set custom weights?
-      &nbsp;<label style="cursor:pointer;"><input type="radio" name="q25a_mode" value="preset"> Preset</label>
-      &nbsp;<label style="cursor:pointer;margin-left:12px;"><input type="radio" name="q25a_mode" value="custom"> Custom weights</label>
+    <label class="q-label"><span class="q-num">Q25a.</span>After setting the preferences for Jonas, which element was the most important?</label>
+    <div class="opt-grid" id="f_jonas_imp"></div>
+  </div>
+
+  <div class="question">
+    <label class="q-label"><span class="q-num">Q25b.</span>What are the top 3 destinations shown for Jonas (in order, as listed in the card panel)?</label>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">① <input type="text" id="q25b_1" placeholder="1st destination" class="q-input" style="width:160px;"></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">② <input type="text" id="q25b_2" placeholder="2nd destination" class="q-input" style="width:160px;"></span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">③ <input type="text" id="q25b_3" placeholder="3rd destination" class="q-input" style="width:160px;"></span>
     </div>
   </div>
 
@@ -1068,14 +953,14 @@ body::before{
   <div style="font-size:10px;color:#a78bfa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Traveler 2 — Lena</div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q26.</span>Compared to Jonas's results, did the card list change noticeably when you changed the sliders to Lena's priorities? Did the change feel <em>proportional and logical?</em> <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
+    <label class="q-label"><span class="q-num">Q26.</span>Compared to Jonas's results, <span class="c2-map-text" style="display:none">did destinations on the preference map (circular map)</span><span class="c2-card-text">did the destination cards</span> shift noticeably when you changed the sliders to Lena's priorities? Did the change feel <em>proportional and logical?</em> <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
     <div class="opt-grid" style="margin-bottom:10px;" id="f1b_rate"></div>
     <textarea class="q-textarea" id="f1b" rows="3" placeholder="What changed, and did it make sense?"></textarea>
   </div>
 
   <div class="question">
     <label class="q-label"><span class="q-num">Q26b.</span>Did some destinations move up or down the list as expected given Lena's priorities? Describe one example.</label>
-    <textarea class="q-textarea" name="q26d" rows="3" placeholder="e.g. London moved to the top because travel time was now heavily weighted…"></textarea>
+    <textarea class="q-textarea" id="q26d" rows="3" placeholder="e.g. London moved to the top because travel time was now heavily weighted…"></textarea>
   </div>
 
 
@@ -1089,7 +974,7 @@ body::before{
 
   <div class="question">
     <label class="q-label"><span class="q-num">Q28b.</span>Were there results that felt wrong or counterintuitive — a destination ranked too high or too low given the priorities set? Describe briefly.</label>
-    <textarea class="q-textarea" name="q28b" rows="3" placeholder="Describe any result that felt inconsistent with the traveler's priorities…"></textarea>
+    <textarea class="q-textarea" id="q28b" rows="3" placeholder="Describe any result that felt inconsistent with the traveler's priorities…"></textarea>
   </div>
 
 
@@ -1122,11 +1007,6 @@ body::before{
     <input class="q-input" id="f7_dest" placeholder="Destination name…" style="max-width:100%;margin-bottom:10px;"/>
     <div class="opt-grid" id="f7_conf"></div>
   </div>
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q33.</span>First thing that comes to mind about this interface?</label>
-    <textarea class="q-textarea" id="f8" rows="2" placeholder="Most immediate impression…"></textarea>
-  </div>
-
   <div class="btn-row">
     <button class="btn-primary" onclick="goTo('scr-c2-tlx',13)">Continue →</button>
   </div>
@@ -1182,7 +1062,7 @@ body::before{
     <div class="opt-grid" id="c2_bear"></div>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q36.</span>In your own words: what does the <strong style="color:var(--cyan)">distance of a city from the centre</strong> of the preference map represent? There's no right or wrong answer here.</label>
+    <label class="q-label"><span class="q-num">Q36.</span>In your own words: what does the <strong style="color:var(--cyan)">distance of a city from the centre</strong> of the map represent? There's no right or wrong answer here.</label>
     <textarea class="q-textarea" id="c3" rows="3" placeholder="What did the distance seem to mean to you?"></textarea>
   </div>
   <div class="question">
@@ -1251,7 +1131,8 @@ body::before{
     <textarea class="q-textarea" id="c15" rows="2" placeholder="Describe briefly…"></textarea>
   </div>
   <div class="btn-row">
-    <button class="btn-primary" onclick="goTo('scr-p3d',18)">Continue →</button>
+    <span class="hint-text" id="hint-p3c">Rate all items to continue</span>
+    <button class="btn-primary" id="btn-p3c" onclick="goTo('scr-p3d',18)" disabled>Continue →</button>
   </div>
 </div>
 
@@ -1304,11 +1185,6 @@ body::before{
   <div class="question">
     <label class="q-label"><span class="q-num">Q47.</span>Are any of these different from what you wrote at the start? If so, which interface led you to them?</label>
     <textarea class="q-textarea" id="c23" rows="3" placeholder="e.g. 'Ljubljana is new — I saw it in the preference map.' Or: 'Same destinations as before.'"></textarea>
-  </div>
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q48.</span>Would you rank the four criteria (travel time, cost, CO₂, popularity) any differently now compared to when you started?</label>
-    <div class="opt-grid" id="c24_yn" style="margin-bottom:10px;"></div>
-    <textarea class="q-textarea" id="c24_why" rows="3" placeholder="Explain any change, or why your ranking stayed the same…"></textarea>
   </div>
   <div class="btn-row">
     <button class="btn-primary" onclick="goTo('scr-submit',20)">Continue to submission →</button>
@@ -1368,7 +1244,6 @@ const CONFIG = {
 
 let STATE = { pid:"", session:"", order:"", cond1Label:"", cond2Label:"", currentScreen:"scr-welcome" };
 let DATA = {};
-let RANKS = { time:null, cost:null, co2:null, pop:null };
 
 const PERSONAS_A = [
   { name:"Clara", color:"#22c55e",
@@ -1376,8 +1251,6 @@ const PERSONAS_A = [
      },
   { name:"Marco", color:"#f59e0b",
     profile:"Marco travels often and values comfort and convenience. He likes destinations where everything works smoothly: direct flights, efficient public transport, and plenty of good restaurants and hotels. His ideal city break combines fine dining, modern architecture, and a few iconic attractions. He doesn't enjoy complicated itineraries or long transfers and is happy to pay more for a premium experience with minimal hassle." },
-  { name:"Sofia", color:"#f43f5e",
-    profile:"Teacher, 52. Sofia enjoys well-planned holidays where she can mix culture with relaxation. She likes museums, historic city centers, guided walking tours, and beautiful parks, but also enjoys sitting at a terrace café and people-watching. Before booking, she reads reviews, watches travel videos, and creates a detailed itinerary. She prefers destinations with a good reputation for safety and hospitality and usually books accommodation well in advance to avoid surprises." },
 ];
 
 const PERSONAS_B = [
@@ -1397,15 +1270,6 @@ const PERSONAS_B = [
       "Project manager, 42. Takes short city breaks whenever she finds a free weekend. She likes lively destinations with good restaurants and cultural activities but wants to get there quickly and without spending too much. Sustainability rarely influences her decision.",
     hint:
       "Balance Travel time and Cost. Popularity moderately important. CO₂ lowest priority."
-  },
-
-  {
-    name: "David",
-    color: "#fb923c",
-    profile:
-      "Recently retired, 63. Enjoys exploring places that most tourists overlook, especially destinations with beautiful landscapes and local traditions. He has a comfortable budget, isn't in a hurry, and prefers lower-impact ways of traveling whenever possible.",
-    hint:
-      "CO₂ should dominate. Popularity should be low. Cost and Travel time are secondary."
   }
 ];
 
@@ -1424,7 +1288,6 @@ const SUS_ITEMS = [
 
 const TLX_DIMS = [
   { key:"mental",     label:"Mental demand",    def:"How much mental effort did this require?" },
-  { key:"physical",   label:"Physical demand",  def:"How much physical activity was required?" },
   { key:"temporal",   label:"Time pressure",    def:"How rushed or pressed for time did you feel?" },
   { key:"perf",       label:"Performance",      def:"How well do you think you accomplished what was asked?" },
   { key:"effort",     label:"Effort",           def:"How hard did you have to work to get there?" },
@@ -1554,25 +1417,20 @@ function setLikertKeyed(tbodyId,key,val,el,rowIdx){
   el.classList.add('sel');DATA[key]=val;checkAll();
 }
 
-function setRank(criterion,value){
-  Object.keys(RANKS).forEach(k=>{if(RANKS[k]===value&&k!==criterion)RANKS[k]=null;});
-  RANKS[criterion]=value;
-  ['time','cost','co2','pop'].forEach(k=>{
-    const rn=document.getElementById('rn-'+k);if(rn)rn.textContent=RANKS[k]||'—';
-    document.querySelectorAll(`#rk-${k} .rank-btn`).forEach((btn,i)=>btn.classList.toggle('sel',RANKS[k]===i+1));
-  });
-  DATA['b10_time']=RANKS.time;DATA['b10_cost']=RANKS.cost;DATA['b10_co2']=RANKS.co2;DATA['b10_pop']=RANKS.pop;
-  checkAll();
-}
-
 function selectOrder(order,el){
   document.querySelectorAll('#scr-welcome .opt').forEach(o=>o.classList.remove('sel'));
   el.classList.add('sel');STATE.order=order;
   // Show map-only questions in scr-c1-persona only when Interface 1 is the Map view (order AB)
-  const showMapQ = order === 'AB';
+  const c1isMap = order === 'AB';
   document.querySelectorAll('#scr-c1-persona .map-only-q').forEach(q=>{
-    q.style.display = showMapQ ? '' : 'none';
+    q.style.display = c1isMap ? '' : 'none';
   });
+  // Q16: Interface 1 exercise — swap label text based on interface type
+  document.querySelectorAll('.c1-map-text').forEach(s=>s.style.display = c1isMap ? '' : 'none');
+  document.querySelectorAll('.c1-card-text').forEach(s=>s.style.display = c1isMap ? 'none' : '');
+  // Q26: Interface 2 exercise — inverse logic
+  document.querySelectorAll('.c2-map-text').forEach(s=>s.style.display = c1isMap ? 'none' : '');
+  document.querySelectorAll('.c2-card-text').forEach(s=>s.style.display = c1isMap ? '' : 'none');
   checkStart();
 }
 
@@ -1617,10 +1475,10 @@ function startStudy(){
 }
 
 function collectAll(){
-  const textIds=['b3','b5','b11','b12a','b12a_why','b12b','b12b_why','b12c','b12c_why','b13',
-    'e0','e1a','e1b','e1c','e1d','e4','e5','e6','e7_dest','e8',
-    'f0','f1a','f1b','f1c','f1d','f4','f5','f6','f7_dest','f8',
-    'c3','c15','c1_other','c16_why','c17_why','c21','c22a','c22b','c23','c24_why'];
+  const textIds=['b3','b5','b12a','b12a_why','b12b','b12b_why',
+    'e0','e1b','q15b_1','q15b_2','q15b_3','q16d','q18b','q18c','e4','e5','e6','e7_dest',
+    'f0','q25b_1','q25b_2','q25b_3','f1a','f1b','q26d','q28b','f4','f5','f6','f7_dest',
+    'c3','c15','c1_other','c_exp1_other_text','c16_why','c21','c22a','c22b','c23'];
   textIds.forEach(id=>{const el=document.getElementById(id);if(el)DATA[id]=el.value;});
   DATA.participantEmail=document.getElementById('participant-email')?.value||'';
   DATA.collectedAt=new Date().toISOString();
@@ -1632,7 +1490,7 @@ function checkAll(){
   const h1a=document.getElementById('hint-p1a');if(h1a)h1a.textContent=p1aOk?'':'Answer Q1, Q2, and Q4 to continue';
   const p1bOk=DATA.b6&&DATA.b8&&DATA.b9;
   const btn1b=document.getElementById('btn-p1b');if(btn1b)btn1b.disabled=!p1bOk;
-  const p1cOk=RANKS.time&&RANKS.cost&&RANKS.co2&&RANKS.pop;
+  const p1cOk=!!DATA.b10;
   const btn1c=document.getElementById('btn-p1c');if(btn1c)btn1c.disabled=!p1cOk;
   const h1c=document.getElementById('hint-p1c');if(h1c)h1c.textContent=p1cOk?'':'Assign all four ranks (each unique) to continue';
   const c1tlxOk=TLX_DIMS.every(d=>{const v=DATA[`c1tlx_${d.key}`];return v&&v>=1&&v<=20;});
@@ -1646,14 +1504,17 @@ function checkAll(){
   const p3aOk=DATA.c1_type&&DATA.c2_bear&&DATA.c4_util;
   const btnp3a=document.getElementById('btn-p3a');if(btnp3a)btnp3a.disabled=!p3aOk;
   const hp3a=document.getElementById('hint-p3a');if(hp3a)hp3a.textContent=p3aOk?'':'Answer Q34, Q35, and Q37 to continue';
-  const p3bOk=['c5','c6','c7','c8','c_exp3','c9','c10','c11'].every(k=>DATA[k]);
+  const p3bOk=['c5','c6','c7','c8','c_exp3','c9','c10','c11','c12'].every(k=>DATA[k]);
   const btnp3b=document.getElementById('btn-p3b');if(btnp3b)btnp3b.disabled=!p3bOk;
+  const p3cOk=['c101','c102','c13'].every(k=>DATA[k]);
+  const btnp3c=document.getElementById('btn-p3c');if(btnp3c)btnp3c.disabled=!p3cOk;
+  const hp3c=document.getElementById('hint-p3c');if(hp3c)hp3c.textContent=p3cOk?'':'Rate all items to continue';
   saveStatus('saving');
 }
 
 function saveLocal(){
   collectAll();
-  try{localStorage.setItem('wheretogo_'+(STATE.pid||'draft'),JSON.stringify({STATE,DATA,RANKS}));saveStatus('saved');}
+  try{localStorage.setItem('wheretogo_'+(STATE.pid||'draft'),JSON.stringify({STATE,DATA}));saveStatus('saved');}
   catch(e){saveStatus('error');}
 }
 
@@ -1703,7 +1564,7 @@ function downloadJSON(){
   DATA.log_session_id   = localStorage.getItem("wtg_session")    || "?";
   DATA.log_participant  = localStorage.getItem("wtg_participant") || "?";
 
-  const blob=new Blob([JSON.stringify({STATE,DATA,RANKS},null,2)],{type:'application/json;charset=utf-8;'});
+  const blob=new Blob([JSON.stringify({STATE,DATA},null,2)],{type:'application/json;charset=utf-8;'});
   const url=URL.createObjectURL(blob);const a=document.createElement('a');
   a.href=url;a.download=`wheretogo_${STATE.pid||'draft'}_${STATE.session||'s0'}_${new Date().toISOString().slice(0,10)}.json`;
   a.click();URL.revokeObjectURL(url);
@@ -1729,7 +1590,6 @@ function init(){
   buildLikert('c1-sus-body',SUS_ITEMS,'c1sus');buildLikert('c2-sus-body',SUS_ITEMS,'c2sus');
   buildRadio('c1_type',['A geographic map','A data chart or graph','A diagram','Something else'],'c1_type');
   buildRadio('c2_bear',['1','2','3','4','5'],'c2_bear');
-  buildRadio('c_exp2',['1','2','3','4','5'],'c_exp2');
   (function(){
     const opts=[
       'Exploring destinations I hadn\'t yet considered',
@@ -1777,14 +1637,15 @@ function init(){
     'The concentric rings on the preference map helped me understand how well each destination matched my preferences.',
     'The size and colour of destination markers communicated something useful.',
     'The destination cards showed the right level of detail.',
-  ],['c11','c12','c13']);
+  ],['c101','c102','c13']);
   buildRadio('c14_el',['Map position of a destination','Destination card details','Preference sliders','Tooltip / popup details','legend','Sort controls'],'c14_el');
   buildRadio('c16',['Map+Card interface','Card-Only interface','Both equally'],'c16');
-  buildRadio('c17',['Map+Card interface','Card-Only interface','Both equally'],'c17');
   buildRadio('c18',['The best part of the tool','Useful but not essential','Neutral','More confusing than helpful','The main problem with the tool'],'c18');
   buildRadio('c19',['1','2','3','4','5'],'c19');
+  buildRadio('b10',['Travel time to get there','Financial cost (transport + accommodation)','Environmental impact','How popular or well-known the destination is'],'b10');
+  buildRadio('e_clara_imp',['Travel time','Cost','CO₂ emissions','Popularity'],'e_clara_imp');
+  buildRadio('f_jonas_imp',['Travel time','Cost','CO₂ emissions','Popularity'],'f_jonas_imp');
   buildRadio('c20',['Much worse','Slightly worse','About the same','Slightly better','Much better'],'c20');
-  buildRadio('c24_yn',['Yes, I would rank them differently now','No, my ranking is the same'],'c24_yn');
   ['inp-pid','inp-session'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',checkStart);});
   document.addEventListener('input',()=>{saveLocal();});
   document.addEventListener('change',()=>{saveLocal();});
