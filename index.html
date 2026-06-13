@@ -596,8 +596,8 @@ body::before{
           <div class="field-block order-block">
             <label>Assigned order <em style="font-style:italic;color:var(--muted)">(from the facilitator)</em></label>
             <div class="opt-grid">
-              <div class="opt" onclick="selectOrder('AB',this)"><span class="opt-dot"></span>AB — Map view first</div>
-              <div class="opt" onclick="selectOrder('BA',this)"><span class="opt-dot"></span>BA — List view first</div>
+              <div class="opt" onclick="selectOrder('AB',this)"><span class="opt-dot"></span>AB — Map+Card interface first</div>
+              <div class="opt" onclick="selectOrder('BA',this)"><span class="opt-dot"></span>BA — Card-Only interface first</div>
             </div>
           </div>
         </div>
@@ -865,13 +865,13 @@ body::before{
   <div style="font-size:10px;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Traveler 2 — Marco</div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q16.</span>Compared to Clara's results, did destinations on the map shift noticeably when you changed the sliders to Marco's priorities? Did the change feel <em>proportional and logical?</em> <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
+    <label class="q-label"><span class="q-num">Q16.</span>Compared to Clara's results, did destinations on the preference map shift noticeably when you changed the sliders to Marco's priorities? Did the change feel <em>proportional and logical?</em> <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
     <div class="opt-grid" style="margin-bottom:10px;" id="e1b_rate"></div>
     <textarea class="q-textarea" id="e1b" rows="3" placeholder="What changed, and did it make sense?"></textarea>
   </div>
 
   <div class="question map-only-q">
-    <label class="q-label"><span class="q-num">Q16b.</span>On the map, did some destinations move <em>closer to or farther from the center</em> as expected given Marco's priorities? Describe one example.</label>
+    <label class="q-label"><span class="q-num">Q16b.</span>On the preference map, did some destinations move <em>closer to or farther from the center</em> as expected given Marco's priorities? Describe one example.</label>
     <textarea class="q-textarea" name="q16d" rows="3" placeholder="e.g. London moved closer to the center because travel time was now less penalized…"></textarea>
   </div>
 
@@ -890,8 +890,8 @@ body::before{
   </div>
 
   <div class="question map-only-q">
-    <label class="q-label"><span class="q-num">Q18c.</span>Did the <em>spatial arrangement</em> of destinations on the map help you understand why certain places ranked higher or lower? If yes, give a specific example.</label>
-    <textarea class="q-textarea" name="q18c" rows="3" placeholder="e.g. Destinations to the north of the map moved in/out as I changed the popularity weight…"></textarea>
+    <label class="q-label"><span class="q-num">Q18c.</span>Did the <em>spatial arrangement</em> of destinations on the preference map help you understand why certain places ranked higher or lower? If yes, give a specific example.</label>
+    <textarea class="q-textarea" name="q18c" rows="3" placeholder="e.g. Destinations to the north of the preference map moved in/out as I changed the popularity weight…"></textarea>
   </div>
 
   <div class="btn-row">
@@ -1168,25 +1168,25 @@ body::before{
 
 <!-- ═══ SCREEN 16 — THE MAP VIEW ═══ -->
 <div class="screen" id="scr-p3a">
-  <div class="sec-tag" style="color:var(--rose)">Evaluation · The map</div>
-  <h1 class="sec-title">What did you see in the map?</h1>
-  <p class="sec-desc">Now that you've used both interfaces, answer these questions specifically about the one with the <strong style="color:var(--cyan)">circular / radial layout</strong>.</p>
+  <div class="sec-tag" style="color:var(--rose)">Evaluation · The preference map</div>
+  <h1 class="sec-title">What did you see in the preference map?</h1>
+  <p class="sec-desc">Now that you've used both interfaces, answer these questions specifically about the one with the <strong style="color:var(--cyan)">preference map</strong>.</p>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q34.</span>Which of these best describes what you were looking at in the circular-layout interface?</label>
+    <label class="q-label"><span class="q-num">Q34.</span>Which of these best describes what you were looking at in the Map+Card interface?</label>
     <div class="opt-grid" id="c1_type"></div>
     <textarea class="q-textarea" id="c1_other" rows="2" placeholder="If 'Something else', describe it…" style="margin-top:10px;"></textarea>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q35.</span>The directions of destinations on the map matched where they actually are — Lisbon to the west, Warsaw to the north, and so on. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
+    <label class="q-label"><span class="q-num">Q35.</span>The directions of destinations on the preference map matched where they actually are — Lisbon to the west, Warsaw to the north, and so on. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
     <div class="opt-grid" id="c2_bear"></div>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q36.</span>In your own words: what does the <strong style="color:var(--cyan)">distance of a city from the centre</strong> of the map represent? There's no right or wrong answer here.</label>
+    <label class="q-label"><span class="q-num">Q36.</span>In your own words: what does the <strong style="color:var(--cyan)">distance of a city from the centre</strong> of the preference map represent? There's no right or wrong answer here.</label>
     <textarea class="q-textarea" id="c3" rows="3" placeholder="What did the distance seem to mean to you?"></textarea>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q37.</span>The circular layout helped me understand which destinations fit my preferences best — better than the card-only interface did. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
+    <label class="q-label"><span class="q-num">Q37.</span>The preference map helped me understand which destinations fit my preferences best — better than the card-only interface did. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
     <div class="opt-grid" id="c4_util"></div>
   </div>
 
@@ -1213,7 +1213,7 @@ body::before{
     </table>
   </div>
   <div class="question" style="margin-top:20px;">
-    <label class="q-label"><span class="q-num">Q33b.</span>I used the map view primarily for… <em style="color:var(--muted)">(select all that apply)</em></label>
+    <label class="q-label"><span class="q-num">Q33b.</span>I used the preference map primarily for… <em style="color:var(--muted)">(select all that apply)</em></label>
     <div class="opt-grid" id="c_exp1" style="flex-direction:column;align-items:flex-start;gap:6px;"></div>
     <div id="c_exp1_other_wrap" style="display:none;margin-top:6px;">
       <input type="text" id="c_exp1_other_text" class="q-input" placeholder="Please describe…" style="max-width:100%;">
@@ -1230,7 +1230,7 @@ body::before{
 <div class="screen" id="scr-p3c">
   <div class="sec-tag" style="color:var(--rose)">Evaluation · What worked</div>
   <h1 class="sec-title">What worked, what didn't?</h1>
-  <p class="sec-desc">Rate specific design elements of the map+card interface. <strong style="color:var(--text)">1 = Strongly disagree · 5 = Strongly agree.</strong></p>
+  <p class="sec-desc">Rate specific design elements of the Map+Card interface. <strong style="color:var(--text)">1 = Strongly disagree · 5 = Strongly agree.</strong></p>
   <div class="likert-wrap" style="margin-bottom:20px;">
     <table class="likert-tbl">
       <thead><tr>
@@ -1243,7 +1243,7 @@ body::before{
     </table>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q38.</span>In the map+card interface, which element was most useful for making your decision?</label>
+    <label class="q-label"><span class="q-num">Q38.</span>In the Map+Card interface, which element was most useful for making your decision?</label>
     <div class="opt-grid" id="c14_el"></div>
   </div>
   <div class="question">
@@ -1268,19 +1268,19 @@ body::before{
   </div>
   
   <div class="question">
-    <label class="q-label"><span class="q-num">Q41.</span>Overall, having the circular map view available in addition to the destination cards was:</label>
+    <label class="q-label"><span class="q-num">Q41.</span>Overall, having the preference map available in addition to the destination cards was:</label>
     <div class="opt-grid" id="c18"></div>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q42.</span>I would use the map+card interface when planning my next leisure trip. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
+    <label class="q-label"><span class="q-num">Q42.</span>I would use the Map+Card interface when planning my next leisure trip. <em style="color:var(--muted)">(1 = strongly disagree · 5 = strongly agree)</em></label>
     <div class="opt-grid" id="c19"></div>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q43.</span>Compared to tools I normally use for travel planning, the map+card interface was…</label>
+    <label class="q-label"><span class="q-num">Q43.</span>Compared to tools I normally use for travel planning, the Map+Card interface was…</label>
     <div class="opt-grid" id="c20"></div>
   </div>
   <div class="question">
-    <label class="q-label"><span class="q-num">Q44.</span>If you could change one thing about the map+card interface, what would it be?</label>
+    <label class="q-label"><span class="q-num">Q44.</span>If you could change one thing about the Map+Card interface, what would it be?</label>
     <textarea class="q-textarea" id="c21" rows="3" placeholder="Your most important suggestion…"></textarea>
   </div>
   <div class="btn-row">
@@ -1303,7 +1303,7 @@ body::before{
   </div>
   <div class="question">
     <label class="q-label"><span class="q-num">Q47.</span>Are any of these different from what you wrote at the start? If so, which interface led you to them?</label>
-    <textarea class="q-textarea" id="c23" rows="3" placeholder="e.g. 'Ljubljana is new — I saw it in the map view.' Or: 'Same destinations as before.'"></textarea>
+    <textarea class="q-textarea" id="c23" rows="3" placeholder="e.g. 'Ljubljana is new — I saw it in the preference map.' Or: 'Same destinations as before.'"></textarea>
   </div>
   <div class="question">
     <label class="q-label"><span class="q-num">Q48.</span>Would you rank the four criteria (travel time, cost, CO₂, popularity) any differently now compared to when you started?</label>
@@ -1586,13 +1586,13 @@ function startStudy(){
   STATE.pid=document.getElementById('inp-pid').value.trim().toUpperCase();
   STATE.session=document.getElementById('inp-session').value.trim();
   if(STATE.order === 'AB'){
-    STATE.cond1Label = 'Map + Card View';
-    STATE.cond2Label = 'Card Only View';
+    STATE.cond1Label = 'Map+Card interface';
+    STATE.cond2Label = 'Card-Only interface';
     document.getElementById('c1-link').href = CONFIG.interfaceMapCard  + `?c=A&p=${STATE.pid}`;
     document.getElementById('c2-link').href = CONFIG.interfaceCardOnly + `?c=B&p=${STATE.pid}`;
   } else {
-    STATE.cond1Label = 'Card Only View';
-    STATE.cond2Label = 'Map + Card View';
+    STATE.cond1Label = 'Card-Only interface';
+    STATE.cond2Label = 'Map+Card interface';
     document.getElementById('c1-link').href = CONFIG.interfaceCardOnly + `?c=B&p=${STATE.pid}`;
     document.getElementById('c2-link').href = CONFIG.interfaceMapCard  + `?c=A&p=${STATE.pid}`;
   }
@@ -1735,7 +1735,7 @@ function init(){
       'Exploring destinations I hadn\'t yet considered',
       'Confirming a destination I was already leaning towards',
       'Understanding how the preference ranking worked',
-      'I didn\'t engage with the map view much',
+      'I didn\'t engage with the preference map much',
       'Other'
     ];
     const el=document.getElementById('c_exp1');if(!el)return;
@@ -1755,32 +1755,32 @@ function init(){
   buildRadio('c4_util',['1','2','3','4','5'],'c4_util');
  buildLikertKeyed('p3b-body', [
   // C5 — Trust in map+card results
-  'I trust the destinations shown by the map+card interface as good matches for my preferences.',
+  'I trust the destinations shown by the Map+Card interface as good matches for my preferences.',
   // C6 — Trust in card-only results
   'I trust the destinations shown by the card-only interface as good matches for my preferences.',
   // C7 — Map+card made me more confident than card-only
-  'The map+card interface helped me feel more confident about the results than the card-only interface did.',
+  'The Map+Card interface helped me feel more confident about the results than the card-only interface did.',
   // C8 — Easier to notice unconsidered destinations
-  'The map+card interface made it easier to notice destinations I would not have considered, compared to the card-only interface.',
+  'The Map+Card interface made it easier to notice destinations I would not have considered, compared to the card-only interface.',
   // C_EXP3 — Exploration breadth
-  'The map+card interface led me to explore options more broadly, rather than just compare the top-ranked cards.',
+  'The Map+Card interface led me to explore options more broadly, rather than just compare the top-ranked cards.',
   // C9 — Added value beyond the list alone
-  'Having the map view available alongside the cards provided something I could not get from the cards alone.',
+  'Having the preference map available alongside the cards provided something I could not get from the cards alone.',
   // C10 — Harder to identify best match (negative)
-  'The circular layout in the map+card interface made it harder to identify which destination was the best match for me.',
+  'The preference map in the Map+Card interface made it harder to identify which destination was the best match for me.',
   // C11 — Order effect
   'My experience with the first interface influenced how I used the second.',
   // C12 — Geographical thinking
   'When browsing the list, I thought about where destinations are geographically'
 ], ['c5', 'c6', 'c7', 'c8', 'c_exp3', 'c9', 'c10', 'c11', 'c12']);
   buildLikertKeyed('p3c-body',[
-    'The concentric rings on the map helped me understand how well each destination matched my preferences.',
+    'The concentric rings on the preference map helped me understand how well each destination matched my preferences.',
     'The size and colour of destination markers communicated something useful.',
     'The destination cards showed the right level of detail.',
   ],['c11','c12','c13']);
   buildRadio('c14_el',['Map position of a destination','Destination card details','Preference sliders','Tooltip / popup details','legend','Sort controls'],'c14_el');
-  buildRadio('c16',['Map+Card','Card Only','Both equally'],'c16');
-  buildRadio('c17',['Map+Card','Card Only','Both equally'],'c17');
+  buildRadio('c16',['Map+Card interface','Card-Only interface','Both equally'],'c16');
+  buildRadio('c17',['Map+Card interface','Card-Only interface','Both equally'],'c17');
   buildRadio('c18',['The best part of the tool','Useful but not essential','Neutral','More confusing than helpful','The main problem with the tool'],'c18');
   buildRadio('c19',['1','2','3','4','5'],'c19');
   buildRadio('c20',['Much worse','Slightly worse','About the same','Slightly better','Much better'],'c20');
