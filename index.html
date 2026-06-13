@@ -807,10 +807,6 @@ body::before{
       <div class="pc-name" style="color:var(--amber)">Marco</div>
       <div class="pc-body">Management consultant, 39 &nbsp;·&nbsp; Origin: <strong>Frankfurt (FRA)</strong><br>Time is his scarcest resource. Comfortable with higher costs. Prefers well-connected, internationally recognized cities.</div>
     </div>
-    <div class="persona-card" style="border-top-color:#a78bfa">
-      <div class="pc-name" style="color:#a78bfa">Sofia</div>
-      <div class="pc-body">Teacher, 52 &nbsp;·&nbsp; Origin: <strong>Amsterdam (AMS)</strong><br>Wants a popular, well-reviewed destination she can plan in detail. Moderate budget, flexible on travel time. Sustainability is a secondary concern.</div>
-    </div>
   </div>
 
   <hr class="sec-divider"/>
@@ -862,10 +858,6 @@ body::before{
     </div>
   </div>
 
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q15c.</span>Before adjusting the sliders, which destination did you expect at the top for Clara? Did the interface confirm or contradict that expectation?</label>
-    <textarea class="q-textarea" id="e1a" rows="3" placeholder="Your expected destination and whether the result matched…"></textarea>
-  </div>
 
   <hr class="sec-divider"/>
 
@@ -878,37 +870,17 @@ body::before{
     <textarea class="q-textarea" id="e1b" rows="3" placeholder="What changed, and did it make sense?"></textarea>
   </div>
 
-  <div class="question">
+  <div class="question map-only-q">
     <label class="q-label"><span class="q-num">Q16b.</span>On the map, did some destinations move <em>closer to or farther from the center</em> as expected given Marco's priorities? Describe one example.</label>
     <textarea class="q-textarea" name="q16d" rows="3" placeholder="e.g. London moved closer to the center because travel time was now less penalized…"></textarea>
   </div>
 
-  <hr class="sec-divider"/>
-
-  <!-- ── TRAVELER 3: SOFIA ─────────────────────────────── -->
-  <div style="font-size:10px;color:#a78bfa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Traveler 3 — Sofia</div>
-
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q17.</span>What are the top 3 destinations shown for Sofia (in order, as listed in the card panel)?</label>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">① <input type="text" name="q17b_1" placeholder="1st destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">② <input type="text" name="q17b_2" placeholder="2nd destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">③ <input type="text" name="q17b_3" placeholder="3rd destination" class="q-input" style="width:160px;"></span>
-    </div>
-  </div>
-
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q17b.</span>Was anything surprising about the destinations suggested for Sofia? Describe any unexpected result.</label>
-    <textarea class="q-textarea" id="e1c" rows="3" placeholder="e.g. a destination you wouldn't have expected given her profile…"></textarea>
-  </div>
-
-  <hr class="sec-divider"/>
 
   <!-- ── CROSS-TRAVELER REFLECTION ─────────────────────── -->
   <div style="font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Cross-traveler reflection</div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q18a.</span>Overall, did the interface respond <em>consistently and meaningfully</em> as you changed the sliders across the three travelers? <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
+    <label class="q-label"><span class="q-num">Q18a.</span>Overall, did the interface respond <em>consistently and meaningfully</em> as you changed the sliders across the two travelers? <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
     <div class="opt-grid" id="q18a_rate"></div>
   </div>
 
@@ -917,7 +889,7 @@ body::before{
     <textarea class="q-textarea" name="q18b" rows="3" placeholder="Describe any result that felt inconsistent with the traveler's priorities…"></textarea>
   </div>
 
-  <div class="question">
+  <div class="question map-only-q">
     <label class="q-label"><span class="q-num">Q18c.</span>Did the <em>spatial arrangement</em> of destinations on the map help you understand why certain places ranked higher or lower? If yes, give a specific example.</label>
     <textarea class="q-textarea" name="q18c" rows="3" placeholder="e.g. Destinations to the north of the map moved in/out as I changed the popularity weight…"></textarea>
   </div>
@@ -1043,10 +1015,6 @@ body::before{
       <div class="pc-name" style="color:#a78bfa">Lena</div>
       <div class="pc-body">Project manager, 42 &nbsp;·&nbsp; Origin: <strong>Frankfurt (FRA)</strong><br>Books last-minute. Speed and cost equally important. Not focused on sustainability.</div>
     </div>
-    <div class="persona-card" style="border-top-color:#fb923c">
-      <div class="pc-name" style="color:#fb923c">David</div>
-      <div class="pc-body">Retired, 63 &nbsp;·&nbsp; Origin: <strong>Amsterdam (AMS)</strong><br>Sustainability is a genuine priority. Comfortable budget. Curious about lesser-known places.</div>
-    </div>
   </div>
 
   <hr class="sec-divider"/>
@@ -1090,15 +1058,6 @@ body::before{
   </div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q25b.</span>What are the top 3 destinations shown for Jonas (in order, as listed in the card panel)?</label>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">① <input type="text" name="q25b_1" placeholder="1st destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">② <input type="text" name="q25b_2" placeholder="2nd destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">③ <input type="text" name="q25b_3" placeholder="3rd destination" class="q-input" style="width:160px;"></span>
-    </div>
-  </div>
-
-  <div class="question">
     <label class="q-label"><span class="q-num">Q25c.</span>Before adjusting the sliders, which destination did you expect at the top for Jonas? Did the interface confirm or contradict that expectation?</label>
     <textarea class="q-textarea" id="f1a" rows="3" placeholder="Your expected destination and whether the result matched…"></textarea>
   </div>
@@ -1119,32 +1078,12 @@ body::before{
     <textarea class="q-textarea" name="q26d" rows="3" placeholder="e.g. London moved to the top because travel time was now heavily weighted…"></textarea>
   </div>
 
-  <hr class="sec-divider"/>
-
-  <!-- ── TRAVELER 3: DAVID ─────────────────────────────── -->
-  <div style="font-size:10px;color:#fb923c;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Traveler 3 — David</div>
-
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q27.</span>What are the top 3 destinations shown for David (in order, as listed in the card panel)?</label>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">① <input type="text" name="q27b_1" placeholder="1st destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">② <input type="text" name="q27b_2" placeholder="2nd destination" class="q-input" style="width:160px;"></span>
-      <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);">③ <input type="text" name="q27b_3" placeholder="3rd destination" class="q-input" style="width:160px;"></span>
-    </div>
-  </div>
-
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q27b.</span>Was anything surprising about the destinations suggested for David? Describe any unexpected result.</label>
-    <textarea class="q-textarea" id="f1c" rows="3" placeholder="e.g. a destination you wouldn't have expected given his profile…"></textarea>
-  </div>
-
-  <hr class="sec-divider"/>
 
   <!-- ── CROSS-TRAVELER REFLECTION ─────────────────────── -->
   <div style="font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">Cross-traveler reflection</div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q28a.</span>Overall, did the interface respond <em>consistently and meaningfully</em> as you changed the sliders across the three travelers? <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
+    <label class="q-label"><span class="q-num">Q28a.</span>Overall, did the interface respond <em>consistently and meaningfully</em> as you changed the sliders across the two travelers? <em style="color:var(--muted)">(1 = not at all · 5 = very much so)</em></label>
     <div class="opt-grid" id="q28a_rate"></div>
   </div>
 
@@ -1628,7 +1567,13 @@ function setRank(criterion,value){
 
 function selectOrder(order,el){
   document.querySelectorAll('#scr-welcome .opt').forEach(o=>o.classList.remove('sel'));
-  el.classList.add('sel');STATE.order=order;checkStart();
+  el.classList.add('sel');STATE.order=order;
+  // Show map-only questions in scr-c1-persona only when Interface 1 is the Map view (order AB)
+  const showMapQ = order === 'AB';
+  document.querySelectorAll('#scr-c1-persona .map-only-q').forEach(q=>{
+    q.style.display = showMapQ ? '' : 'none';
+  });
+  checkStart();
 }
 
 function checkStart(){
