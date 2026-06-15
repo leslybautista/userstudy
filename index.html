@@ -1375,11 +1375,11 @@ function buildTLX(containerId,prefix){
         <div class="tlx-def">${dim.def}</div>
       </div>
       <div class="tlx-slider-wrap">
-        <input class="tlx-slider" type="range" min="1" max="20" value="1" step="1" list="${key}-ticks"
-          oninput="DATA['${key}']=parseInt(this.value)||'';document.getElementById('${key}-val').textContent=this.value;checkAll();">
-        <span class="tlx-val" id="${key}-val">1</span>
+        <input class="tlx-slider" type="range" min="0" max="20" value="0" step="1" list="${key}-ticks"
+          oninput="DATA['${key}']=parseInt(this.value)||'';document.getElementById('${key}-val').textContent=parseInt(this.value)||'—';checkAll();">
+        <span class="tlx-val" id="${key}-val">—</span>
         <datalist id="${key}-ticks">
-          <option value="1"><option value="2"><option value="3"><option value="4"><option value="5">
+          <option value="0"><option value="1"><option value="2"><option value="3"><option value="4"><option value="5">
           <option value="6"><option value="7"><option value="8"><option value="9"><option value="10">
           <option value="11"><option value="12"><option value="13"><option value="14"><option value="15">
           <option value="16"><option value="17"><option value="18"><option value="19"><option value="20">
@@ -1387,7 +1387,7 @@ function buildTLX(containerId,prefix){
       </div>`;
 
     el.appendChild(row);
-    DATA[key]=1;
+    DATA[key]=0;
   });
 }
 
