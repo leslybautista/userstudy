@@ -866,7 +866,7 @@ body::before{
   </div>
   <div class="btn-row">
     <span class="hint-text" id="hint-c1sus">Rate all 10 items to continue</span>
-    <button class="btn-primary" id="btn-c1sus" onclick="goTo('scr-break',9)" disabled>Take a break →</button>
+    <button class="btn-primary" id="btn-c1sus" onclick="snapshotInterface1Log();goTo('scr-break',9)" disabled>Take a break →</button>
   </div>
 </div>
 
@@ -1479,6 +1479,12 @@ function startStudy(){
   goTo('scr-p1a',1);
 }
 
+function snapshotInterface1Log(){
+  localStorage.setItem("wtg_log_cond1",      localStorage.getItem("wtg_log")       || "[]");
+  localStorage.setItem("wtg_condition_cond1", localStorage.getItem("wtg_condition") || "?");
+  localStorage.setItem("wtg_session_cond1",   localStorage.getItem("wtg_session")   || "?");
+}
+
 function collectAll(){
   const textIds=['b3','b5','b12a','b12a_why','b12b','b12b_why',
     'e0','e1b','q15b_1','q15b_2','q15b_3','q16d','q18b','q18c','e4','e5','e6','e7_dest',
@@ -1536,10 +1542,13 @@ async function submitAll(){
   const status=document.getElementById('submit-status');
   btn.disabled=true;btn.textContent='Submitting…';
   downloadJSON();
-  DATA.interaction_log  = localStorage.getItem("wtg_log")        || "[]";
-  DATA.log_condition    = localStorage.getItem("wtg_condition")  || "?";
-  DATA.log_session_id   = localStorage.getItem("wtg_session")    || "?";
-  DATA.log_participant  = localStorage.getItem("wtg_participant") || "?";
+  DATA.interaction_log_c1  = localStorage.getItem("wtg_log_cond1")       || "[]";
+  DATA.log_condition_c1    = localStorage.getItem("wtg_condition_cond1") || "?";
+  DATA.log_session_id_c1   = localStorage.getItem("wtg_session_cond1")  || "?";
+  DATA.interaction_log_c2  = localStorage.getItem("wtg_log")             || "[]";
+  DATA.log_condition_c2    = localStorage.getItem("wtg_condition")       || "?";
+  DATA.log_session_id_c2   = localStorage.getItem("wtg_session")         || "?";
+  DATA.log_participant     = localStorage.getItem("wtg_participant")      || "?";
   if(CONFIG.formspreeEndpoint.includes('YOUR_FORM_ID')){
     status.style.display='block';status.style.background='rgba(245,158,11,.08)';
     status.style.border='1px solid rgba(245,158,11,.3)';status.style.color='var(--amber)';
@@ -1550,7 +1559,10 @@ async function submitAll(){
     const payload={...DATA,_subject:`WhereToGo Study — ${DATA.pid} — ${DATA.session} — ${DATA.order}`,_replyto:DATA.participantEmail||'no-email@study.wheretogo'};
     const res=await fetch(CONFIG.formspreeEndpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
     if(res.ok){
-      localStorage.removeItem("wtg_log"); // 
+      localStorage.removeItem("wtg_log");
+      localStorage.removeItem("wtg_log_cond1");
+      localStorage.removeItem("wtg_condition_cond1");
+      localStorage.removeItem("wtg_session_cond1");
       saveStatus('sent');goTo('scr-done',21);
     }
     else throw new Error('Server error '+res.status);
@@ -1564,10 +1576,13 @@ async function submitAll(){
 
 function downloadJSON(){
   collectAll();
-  DATA.interaction_log  = localStorage.getItem("wtg_log")        || "[]";
-  DATA.log_condition    = localStorage.getItem("wtg_condition")  || "?";
-  DATA.log_session_id   = localStorage.getItem("wtg_session")    || "?";
-  DATA.log_participant  = localStorage.getItem("wtg_participant") || "?";
+  DATA.interaction_log_c1  = localStorage.getItem("wtg_log_cond1")       || "[]";
+  DATA.log_condition_c1    = localStorage.getItem("wtg_condition_cond1") || "?";
+  DATA.log_session_id_c1   = localStorage.getItem("wtg_session_cond1")  || "?";
+  DATA.interaction_log_c2  = localStorage.getItem("wtg_log")             || "[]";
+  DATA.log_condition_c2    = localStorage.getItem("wtg_condition")       || "?";
+  DATA.log_session_id_c2   = localStorage.getItem("wtg_session")         || "?";
+  DATA.log_participant     = localStorage.getItem("wtg_participant")      || "?";
 
   const blob=new Blob([JSON.stringify({STATE,DATA},null,2)],{type:'application/json;charset=utf-8;'});
   const url=URL.createObjectURL(blob);const a=document.createElement('a');
