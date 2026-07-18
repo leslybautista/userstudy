@@ -629,10 +629,7 @@ body::before{
   <h1 class="sec-title">Your travel habits</h1>
   <p class="sec-desc">Tell us a bit about how you normally decide where to go.</p>
 
-  <div class="question">
-    <label class="q-label"><span class="q-num">Q6.</span>How many leisure trips have you taken in the past 2 years?</label>
-    <div class="opt-grid" id="b6"></div>
-  </div>
+
   <div class="question">
     <label class="q-label"><span class="q-num">Q7.</span>When choosing a destination, what do you normally rely on? <em style="color:var(--muted)">(select all that apply)</em></label>
     <div class="opt-grid" id="b7"></div>
@@ -647,7 +644,7 @@ body::before{
   </div>
 
   <div class="btn-row">
-    <span class="hint-text" id="hint-p1b">Answer Q6, Q8, and Q9 to continue</span>
+    <span class="hint-text" id="hint-p1b">Answer Q7, Q8, and Q9 to continue</span>
     <button class="btn-primary" id="btn-p1b" onclick="goTo('scr-p1c',2)" disabled>Continue →</button>
   </div>
 </div>
@@ -712,7 +709,7 @@ body::before{
   <div class="iface-link">
     <div class="iface-link-desc">
       Click the button to open the interface in a new tab.<br/>
-      When you're done exploring, <strong>return to this screen</strong>
+      When you're done exploring, <strong>return to this screen, do not close the link</strong>
     </div>
     <a id="c1-link" href="#" target="_blank" class="iface-link-btn">Open Interface 1 ↗</a>
     <div class="warn-box" style="margin:0;text-align:center;">
@@ -721,7 +718,7 @@ body::before{
   </div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q14.</span>After your free exploration: what do you think this interface is for? Describe it in your own words — no technical language needed.</label>
+    <label class="q-label"><span class="q-num">Q14.</span>Optional - After your free exploration: what do you think this interface is for? no technical language needed.</label>
     <textarea class="q-textarea" id="e0" rows="3" placeholder="First impressions, in plain language…"></textarea>
   </div>
 
@@ -876,9 +873,9 @@ body::before{
     <div class="break-icon">⏸</div>
     <h2 style="font-family:var(--serif);font-size:32px;color:var(--amber);margin-bottom:12px;">Take a 5-minute break</h2>
     <p style="color:var(--muted2);max-width:420px;margin:0 auto 28px;line-height:1.8;">
-      Step away from the screen for a few minutes.<br/>
-      Please don't discuss the interface you just used with other participants.<br/><br/>
-      <span style="font-size:11px;opacity:.6;">The facilitator will let you know when to continue.</span>
+      Step away from the screen for a few minutes if you want.<br/>
+      Click continue when you fell ready for the next interface.<br/><br/>
+      <span style="font-size:11px;opacity:.6;">.</span>
     </p>
     <button class="btn-primary" onclick="goTo('scr-c2-orient',10)" style="background:var(--amber);color:var(--bg);">I'm ready for the second interface →</button>
   </div>
@@ -902,7 +899,7 @@ body::before{
   </div>
 
   <div class="question">
-    <label class="q-label"><span class="q-num">Q24.</span>After your free exploration: what does this interface do, and how is it different from the first one?</label>
+    <label class="q-label"><span class="q-num">Q24.</span>Optional - After your free exploration: what does this interface do, and how is it different from the first one?</label>
     <textarea class="q-textarea" id="f0" rows="3" placeholder="First impressions and comparison with the first interface…"></textarea>
   </div>
 
@@ -1175,7 +1172,7 @@ body::before{
 <!-- ═══ SCREEN 20 — REVISITING YOUR LIST ═══ -->
 <div class="screen" id="scr-p3e">
   <div class="sec-tag" style="color:var(--rose)">Evaluation · Back to your list</div>
-  <h1 class="sec-title">Revisiting your destination list</h1>
+  <h1 class="sec-title">Revisiting YOUR destination list</h1>
   <p class="sec-desc">Remember the destinations you named at the very start? Let's come back to that.</p>
 
   <div class="question">
@@ -1596,7 +1593,7 @@ function init(){
   buildRadio('f7_conf',['1 — Not at all','2','3','4','5 — Very confident'],'f7_conf');
   buildTLX('c1-tlx-grid','c1tlx');buildTLX('c2-tlx-grid','c2tlx');
   buildLikert('c1-sus-body',SUS_ITEMS,'c1sus');buildLikert('c2-sus-body',SUS_ITEMS,'c2sus');
-  buildRadio('c1_type',['A geographic map','A data chart or graph','A diagram','Something else'],'c1_type');
+  buildRadio('c1_type',['A map','A data chart or graph','A scatter plot','Something else'],'c1_type');
   buildRadio('c2_bear',['1','2','3','4','5'],'c2_bear');
   (function(){
     const opts=[
